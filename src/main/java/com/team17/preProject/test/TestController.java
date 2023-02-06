@@ -5,16 +5,14 @@ import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
 import com.team17.preProject.helper.email.EmailSender;
 import com.team17.preProject.helper.upload.S3Upload;
-import com.team17.preProject.member.entity.Member;
+import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.security.auth.PrincipalDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

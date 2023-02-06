@@ -1,19 +1,15 @@
 package com.team17.preProject.security.service;
 
-import com.team17.preProject.answer.entity.Answer;
-import com.team17.preProject.answer.service.AnswerService;
+import com.team17.preProject.domain.answer.entity.Answer;
+import com.team17.preProject.domain.answer.service.AnswerService;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
-import com.team17.preProject.member.entity.Member;
-import com.team17.preProject.question.entity.Question;
-import com.team17.preProject.question.repository.QuestionRepository;
-import com.team17.preProject.question.service.QuestionService;
+import com.team17.preProject.domain.question.entity.Question;
+import com.team17.preProject.domain.question.service.QuestionService;
 import com.team17.preProject.security.auth.PrincipalDetails;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

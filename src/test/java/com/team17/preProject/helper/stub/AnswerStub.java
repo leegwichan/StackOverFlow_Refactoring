@@ -1,6 +1,6 @@
 package com.team17.preProject.helper.stub;
 
-import com.team17.preProject.answer.dto.AnswerDto;
+import com.team17.preProject.domain.answer.dto.AnswerDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

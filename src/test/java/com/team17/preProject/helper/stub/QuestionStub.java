@@ -1,18 +1,15 @@
 package com.team17.preProject.helper.stub;
 
-import com.team17.preProject.answer.dto.AnswerDto;
+import com.team17.preProject.domain.answer.dto.AnswerDto;
 import com.team17.preProject.dto.MultiResponseDto;
-import com.team17.preProject.member.dto.MemberDto;
-import com.team17.preProject.question.dto.QuestionDto;
-import com.team17.preProject.question.entity.Question;
+import com.team17.preProject.domain.question.dto.QuestionDto;
+import com.team17.preProject.domain.question.entity.Question;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpMethod;
 
-import java.awt.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
