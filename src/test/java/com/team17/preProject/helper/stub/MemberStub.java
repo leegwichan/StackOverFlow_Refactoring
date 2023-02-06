@@ -1,6 +1,6 @@
 package com.team17.preProject.helper.stub;
 
-import com.team17.preProject.member.dto.MemberDto;
+import com.team17.preProject.domain.member.dto.MemberDto;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

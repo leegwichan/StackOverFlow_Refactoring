@@ -1,6 +1,6 @@
 package com.team17.preProject.security.auth;
 
-import com.team17.preProject.member.entity.Member;
+import com.team17.preProject.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

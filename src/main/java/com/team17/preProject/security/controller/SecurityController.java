@@ -3,9 +3,9 @@ package com.team17.preProject.security.controller;
 import com.team17.preProject.dto.SingleResponseDto;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
-import com.team17.preProject.member.dto.MemberDto;
-import com.team17.preProject.member.entity.Member;
-import com.team17.preProject.member.mapper.MemberMapper;
+import com.team17.preProject.domain.member.dto.MemberDto;
+import com.team17.preProject.domain.member.entity.Member;
+import com.team17.preProject.domain.member.mapper.MemberMapper;
 import com.team17.preProject.security.auth.PrincipalDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,12 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/auth")

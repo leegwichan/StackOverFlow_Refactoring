@@ -1,12 +1,13 @@
 package com.team17.preProject.member.controller;
 
+import com.team17.preProject.domain.member.controller.MemberController;
 import com.team17.preProject.dto.SingleResponseDto;
 import com.team17.preProject.helper.stub.MemberStub;
 import com.team17.preProject.helper.util.docs.JsonDocumentUtils;
-import com.team17.preProject.member.dto.MemberDto;
-import com.team17.preProject.member.entity.Member;
-import com.team17.preProject.member.mapper.MemberMapper;
-import com.team17.preProject.member.service.MemberService;
+import com.team17.preProject.domain.member.dto.MemberDto;
+import com.team17.preProject.domain.member.entity.Member;
+import com.team17.preProject.domain.member.mapper.MemberMapper;
+import com.team17.preProject.domain.member.service.MemberService;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
