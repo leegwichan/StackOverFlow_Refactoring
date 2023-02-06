@@ -9,6 +9,7 @@ import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.security.auth.PrincipalDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+@Profile("dev")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/test")
