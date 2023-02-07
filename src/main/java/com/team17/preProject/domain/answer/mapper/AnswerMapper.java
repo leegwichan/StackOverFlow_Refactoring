@@ -75,7 +75,7 @@ public interface AnswerMapper {
                 question.getModifiedAt(),
                 memberToMemberSubResponseDto(question.getMember()),
                 question.getAnswers().size(),
-                bestAnswer != null ? bestAnswer.getAnswerId() : 0L
+                bestAnswer != null ? bestAnswer.getAnswerId() : null
         );
     }
 }
