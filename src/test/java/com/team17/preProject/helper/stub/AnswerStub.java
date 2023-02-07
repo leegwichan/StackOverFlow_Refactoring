@@ -49,5 +49,6 @@ public class AnswerStub {
         ENTITY.setContent("content_answer");
         ENTITY.setVote(45L);
         ENTITY.setMember(MemberStub.ENTITY);
+        ENTITY.setQuestion(QuestionStub.ENTITY);
     }
 }

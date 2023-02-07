@@ -73,6 +73,7 @@ public class QuestionStub {
     }
 
     public static final Question ENTITY;
+    public static final QuestionDto.SubResponse SUB_RESPONSE;
     static {
         ENTITY = new Question();
         ENTITY.setQuestionId(3L);
@@ -81,5 +82,16 @@ public class QuestionStub {
         ENTITY.setView(100L);
         ENTITY.setVote(5L);
         ENTITY.setMember(MemberStub.ENTITY);
+
+        SUB_RESPONSE = new QuestionDto.SubResponse();
+        SUB_RESPONSE.setQuestionId(ENTITY.getQuestionId());
+        SUB_RESPONSE.setTitle(ENTITY.getTitle());
+        SUB_RESPONSE.setContent(ENTITY.getContent());
+        SUB_RESPONSE.setView(ENTITY.getView());
+        SUB_RESPONSE.setVote(ENTITY.getVote());
+        SUB_RESPONSE.setCreatedAt(ENTITY.getCreatedAt());
+        SUB_RESPONSE.setModifiedAt(ENTITY.getModifiedAt());
+        SUB_RESPONSE.setMember(MemberStub.SUB_RESPONSE);
+        SUB_RESPONSE.setAnswerCount(ENTITY.getAnswers().size());
     }
 }
