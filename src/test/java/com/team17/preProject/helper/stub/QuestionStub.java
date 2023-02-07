@@ -71,4 +71,15 @@ public class QuestionStub {
     public static Page<Question> getMultiEntity(){
         return multiEntity;
     }
+
+    public static final Question ENTITY;
+    static {
+        ENTITY = new Question();
+        ENTITY.setQuestionId(3L);
+        ENTITY.setTitle("question title");
+        ENTITY.setContent("question content");
+        ENTITY.setView(100L);
+        ENTITY.setVote(5L);
+        ENTITY.setMember(MemberStub.ENTITY);
+    }
 }

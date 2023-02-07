@@ -1,6 +1,7 @@
 package com.team17.preProject.helper.stub;
 
 import com.team17.preProject.domain.member.dto.MemberDto;
+import com.team17.preProject.domain.member.entity.Member;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -62,4 +63,17 @@ public class MemberStub {
         return subResponse;
     }
 
+    public static final Member ENTITY;
+    static {
+        ENTITY = new Member();
+        ENTITY.setMemberId(5L);
+        ENTITY.setEmail("email@email.com");
+        ENTITY.setDisplayName("name");
+        ENTITY.setImage("https://img");
+        ENTITY.setLocation("location");
+        ENTITY.setMemberTitle("title");
+        ENTITY.setAboutMe("aboutMe");
+    }
+    public static final MemberDto.SubResponse SUB_RESPONSE = new MemberDto.SubResponse(
+            ENTITY.getMemberId(), ENTITY.getEmail(), ENTITY.getDisplayName(), ENTITY.getImage());
 }

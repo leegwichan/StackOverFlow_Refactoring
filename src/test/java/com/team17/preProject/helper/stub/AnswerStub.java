@@ -1,6 +1,7 @@
 package com.team17.preProject.helper.stub;
 
 import com.team17.preProject.domain.answer.dto.AnswerDto;
+import com.team17.preProject.domain.answer.entity.Answer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -39,5 +40,14 @@ public class AnswerStub {
 
     public static Page<AnswerDto.Response> getMultiResponseBody() {
         return multiResponseBody;
+    }
+
+    public static final Answer ENTITY;
+    static {
+        ENTITY = new Answer();
+        ENTITY.setAnswerId(10L);
+        ENTITY.setContent("content_answer");
+        ENTITY.setVote(45L);
+        ENTITY.setMember(MemberStub.ENTITY);
     }
 }
