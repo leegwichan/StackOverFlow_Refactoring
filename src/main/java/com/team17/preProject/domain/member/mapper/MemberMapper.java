@@ -11,5 +11,4 @@ public interface MemberMapper {
      Member memberPostDtoToMember(MemberDto.Post post);
      MemberDto.Response memberToMemberResponseDto(Member member);
      MemberDto.SubResponse memberToMemberSubResponseDto(Member member);
-
 }
