@@ -4,24 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.team17.preProject.domain.member.dto.MemberDto;
 import com.team17.preProject.domain.member.entity.Member;
-import com.team17.preProject.domain.member.entity.MemberRole;
+import com.team17.preProject.helper.stub.MemberStub;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 public class MemberMapperTest {
 
     private final MemberMapper memberMapper = Mappers.getMapper(MemberMapper.class);
-    private static final Member MOCK_MEMBER;
-    static {
-        MOCK_MEMBER = new Member();
-        MOCK_MEMBER.setMemberId(5L);
-        MOCK_MEMBER.setEmail("email@email.com");
-        MOCK_MEMBER.setDisplayName("name");
-        MOCK_MEMBER.setImage("https://img");
-        MOCK_MEMBER.setLocation("location");
-        MOCK_MEMBER.setMemberTitle("title");
-        MOCK_MEMBER.setAboutMe("aboutMe");
-    }
+    private static final Member MOCK_MEMBER = MemberStub.ENTITY;
 
     @Test
     void memberPatchDtoToMemberTest() {
