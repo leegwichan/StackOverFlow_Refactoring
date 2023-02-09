@@ -4,6 +4,7 @@ import com.team17.preProject.domain.answer.dto.AnswerDto;
 import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.answer.mapper.AnswerMapper;
 import com.team17.preProject.domain.answer.service.AnswerService;
+import com.team17.preProject.domain.question.mapper.QuestionMapper;
 import com.team17.preProject.dto.MultiResponseDto;
 import com.team17.preProject.dto.SingleResponseDto;
 import com.team17.preProject.domain.question.dto.QuestionDto;
@@ -32,6 +33,7 @@ public class AnswerController {
     private final AnswerService answerService;
     private final SecurityService securityService;
     private final AnswerMapper mapper;
+    private final QuestionMapper questionMapper;
 
     @GetMapping
     public ResponseEntity getAnswersByQuestionId(@RequestParam("question-id") @Positive long questionId){
@@ -94,7 +96,7 @@ public class AnswerController {
         securityService.checkQuestionWriterByAnswerId(authentication, answerId);
 
         Answer patchQuestion = answerService.checkBestAnswer(answerId);
-        QuestionDto.SubResponse response = mapper.questionToQuestionSubResponseDto(patchQuestion.getQuestion());
+        QuestionDto.SubResponse response = questionMapper.questionToQuestionSubResponseDto(patchQuestion.getQuestion());
 
         return new ResponseEntity(
                 new SingleResponseDto<>(response), HttpStatus.OK);
