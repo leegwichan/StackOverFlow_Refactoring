@@ -31,9 +31,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	implementation 'org.projectlombok:lombok:1.18.24'
-	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor "org.projectlombok:lombok:1.18.24"
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
@@ -46,6 +46,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'com.google.code.gson:gson'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 	testCompileOnly 'org.projectlombok:lombok:1.18.24' // 테스트 의존성 추가
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24' // 테스트 의존성 추가
 }
