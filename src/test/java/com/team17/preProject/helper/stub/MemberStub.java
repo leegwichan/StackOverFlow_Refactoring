@@ -17,6 +17,14 @@ import java.util.Map;
 @Getter
 public class MemberStub {
 
+    private static final long MOCK_MEMBER_ID = 5L;
+    private static final String MOCK_EMAIL = "email@email.com";
+    private static final String MOCK_DISPLAY_NAME = "name";
+    private static final String MOCK_IMAGE = "https://img";
+    private static final String MOCK_LOCATION = "location";
+    private static final String MOCK_MEMBER_TITLE = "member_title";
+    private static final String MOCK_ABOUT_ME = "aboutMe";
+
     private static Map<HttpMethod, Object> requestBody;
     private static MemberDto.Response singleResponseBody;
     private static Page<MemberDto.Response> multiResponseBody;
@@ -59,9 +67,9 @@ public class MemberStub {
         return multiResponseBody;
     }
 
-    public static MemberDto.SubResponse getSubResponse(){
-        return subResponse;
-    }
+//    public static MemberDto.SubResponse getSubResponse(){
+//        return subResponse;
+//    }
 
     public static final Member ENTITY;
     static {
@@ -76,4 +84,22 @@ public class MemberStub {
     }
     public static final MemberDto.SubResponse SUB_RESPONSE = new MemberDto.SubResponse(
             ENTITY.getMemberId(), ENTITY.getEmail(), ENTITY.getDisplayName(), ENTITY.getImage());
+
+    public static Member getEntity() {
+        Member mockMember = new Member();
+        mockMember.setMemberId(MOCK_MEMBER_ID);
+        mockMember.setEmail(MOCK_EMAIL);
+        mockMember.setDisplayName(MOCK_DISPLAY_NAME);
+        mockMember.setImage(MOCK_IMAGE);
+        mockMember.setLocation(MOCK_LOCATION);
+        mockMember.setMemberTitle(MOCK_MEMBER_TITLE);
+        mockMember.setAboutMe(MOCK_ABOUT_ME);
+
+        return mockMember;
+    }
+
+    public static MemberDto.SubResponse getSubResponse() {
+        return new MemberDto.SubResponse(
+                MOCK_MEMBER_ID, MOCK_EMAIL, MOCK_DISPLAY_NAME, MOCK_IMAGE);
+    }
 }

@@ -51,4 +51,12 @@ public class AnswerStub {
         ENTITY.setMember(MemberStub.ENTITY);
         ENTITY.setQuestion(QuestionStub.ENTITY);
     }
+
+    public static final Answer getEntity() {
+        Answer mockEntity = new Answer();
+        mockEntity.setAnswerId(10L);
+        mockEntity.setContent("content_answer");
+        mockEntity.setVote(45L);
+        return mockEntity;
+    }
 }

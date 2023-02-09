@@ -2,21 +2,24 @@ package com.team17.preProject.domain.question.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.team17.preProject.domain.answer.entity.Answer;
+import com.team17.preProject.domain.answer.mapper.AnswerMapperImpl;
 import com.team17.preProject.domain.member.entity.Member;
+import com.team17.preProject.domain.member.mapper.MemberMapperImpl;
 import com.team17.preProject.domain.question.dto.QuestionDto;
 import com.team17.preProject.domain.question.entity.Question;
-import com.team17.preProject.helper.stub.AnswerStub;
 import com.team17.preProject.helper.stub.MemberStub;
 import com.team17.preProject.helper.stub.QuestionStub;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
+@SpringBootTest(classes = {QuestionMapperImpl.class, AnswerMapperImpl.class, MemberMapperImpl.class})
 public class QuestionMapperTest {
 
-    private final QuestionMapper questionMapper = Mappers.getMapper(QuestionMapper.class);
+    @Autowired
+    private QuestionMapper questionMapper;
     private static final Question MOCK_QUESTION = QuestionStub.ENTITY;
 
 
