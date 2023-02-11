@@ -71,4 +71,55 @@ public class QuestionStub {
     public static Page<Question> getMultiEntity(){
         return multiEntity;
     }
+
+    public static final Question ENTITY = new Question();
+    public static final QuestionDto.SubResponse SUB_RESPONSE= new QuestionDto.SubResponse();
+    static {
+        ENTITY.setQuestionId(3L);
+        ENTITY.setTitle("question title");
+        ENTITY.setContent("question content");
+        ENTITY.setView(100L);
+        ENTITY.setVote(5L);
+        ENTITY.setMember(MemberStub.ENTITY);
+
+        SUB_RESPONSE.setQuestionId(ENTITY.getQuestionId());
+        SUB_RESPONSE.setTitle(ENTITY.getTitle());
+        SUB_RESPONSE.setContent(ENTITY.getContent());
+        SUB_RESPONSE.setView(ENTITY.getView());
+        SUB_RESPONSE.setVote(ENTITY.getVote());
+        SUB_RESPONSE.setCreatedAt(ENTITY.getCreatedAt());
+        SUB_RESPONSE.setModifiedAt(ENTITY.getModifiedAt());
+        SUB_RESPONSE.setMember(MemberStub.SUB_RESPONSE);
+        SUB_RESPONSE.setAnswerCount(ENTITY.getAnswers().size());
+    }
+
+    private static final long MOCK_QUESTION_ID = 5L;
+    private static final String MOCK_TITLE = "question_title";
+    private static final String MOCK_CONTENT = "question_content";
+    private static final long MOCK_VIEW = 100L;
+    private static final long MOCK_VOTE = 10L;
+
+    public static Question getEntity() {
+        Question mockQuestion = new Question();
+        mockQuestion.setQuestionId(MOCK_QUESTION_ID);
+        mockQuestion.setTitle(MOCK_TITLE);
+        mockQuestion.setContent(MOCK_CONTENT);
+        mockQuestion.setView(MOCK_VIEW);
+        mockQuestion.setVote(MOCK_VOTE);
+
+        return mockQuestion;
+    }
+
+    public static QuestionDto.SubResponse getSubResponse() {
+        QuestionDto.SubResponse mockSubResponse = new QuestionDto.SubResponse();
+        mockSubResponse.setQuestionId(MOCK_QUESTION_ID);
+        mockSubResponse.setTitle(MOCK_TITLE);
+        mockSubResponse.setContent(MOCK_CONTENT);
+        mockSubResponse.setView(MOCK_VIEW);
+        mockSubResponse.setVote(MOCK_VOTE);
+        mockSubResponse.setMember(MemberStub.SUB_RESPONSE);
+        mockSubResponse.setAnswerCount(0);
+
+        return mockSubResponse;
+    }
 }

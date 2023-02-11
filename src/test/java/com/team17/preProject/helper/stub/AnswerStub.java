@@ -1,6 +1,7 @@
 package com.team17.preProject.helper.stub;
 
 import com.team17.preProject.domain.answer.dto.AnswerDto;
+import com.team17.preProject.domain.answer.entity.Answer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -39,5 +40,34 @@ public class AnswerStub {
 
     public static Page<AnswerDto.Response> getMultiResponseBody() {
         return multiResponseBody;
+    }
+
+    private static final long MOCK_ANSWER_ID = 10L;
+    private static final String MOCK_CONTENT = "content_answer";
+    private static final long MOCK_VOTE = 45L;
+
+    public static final Answer ENTITY;
+    static {
+        ENTITY = new Answer();
+        ENTITY.setAnswerId(10L);
+        ENTITY.setContent("content_answer");
+        ENTITY.setVote(45L);
+        ENTITY.setMember(MemberStub.ENTITY);
+        ENTITY.setQuestion(QuestionStub.ENTITY);
+    }
+
+    public static final Answer getEntity() {
+        Answer mockEntity = new Answer();
+        mockEntity.setAnswerId(10L);
+        mockEntity.setContent("content_answer");
+        mockEntity.setVote(45L);
+        return mockEntity;
+    }
+
+    public static final AnswerDto.Response getResponse() {
+        return new AnswerDto.Response(
+                MOCK_ANSWER_ID, MOCK_CONTENT, MOCK_VOTE,
+                null, null, MemberStub.getSubResponse()
+        );
     }
 }
