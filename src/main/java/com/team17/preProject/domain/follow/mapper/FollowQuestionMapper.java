@@ -5,16 +5,18 @@ import com.team17.preProject.domain.follow.entity.FollowQuestion;
 import com.team17.preProject.domain.follow.dto.FollowQuestionDto;
 import com.team17.preProject.domain.member.dto.MemberDto;
 import com.team17.preProject.domain.member.entity.Member;
+import com.team17.preProject.domain.member.mapper.MemberMapper;
 import com.team17.preProject.domain.question.dto.QuestionDto;
 import com.team17.preProject.domain.question.entity.Question;
+import com.team17.preProject.domain.question.mapper.QuestionMapper;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {QuestionMapper.class, MemberMapper.class})
 public interface FollowQuestionMapper {
-    default List<QuestionDto.SubResponse> FollowQuestionsToQuestionSubResponseDto(
+    default List<QuestionDto.SubResponse> followQuestionsToQuestionSubResponseDto(
             List<FollowQuestion> followQuestions){
 
         return followQuestions.stream().map(
