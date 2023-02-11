@@ -4,19 +4,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.team17.preProject.domain.answer.dto.AnswerDto;
 import com.team17.preProject.domain.answer.entity.Answer;
+import com.team17.preProject.domain.answer.mapper.AnswerMapperImpl;
 import com.team17.preProject.domain.follow.dto.FollowAnswerDto;
 import com.team17.preProject.domain.follow.entity.FollowAnswer;
+import com.team17.preProject.domain.member.mapper.MemberMapperImpl;
 import com.team17.preProject.domain.question.entity.Question;
+import com.team17.preProject.domain.question.mapper.QuestionMapperImpl;
 import com.team17.preProject.helper.stub.AnswerStub;
 import com.team17.preProject.helper.stub.MemberStub;
 import com.team17.preProject.helper.stub.QuestionStub;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
+@SpringBootTest(classes = {QuestionMapperImpl.class, AnswerMapperImpl.class,
+        MemberMapperImpl.class, FollowAnswerMapperImpl.class})
 public class FollowAnswerMapperTest {
 
-    private static final FollowAnswerMapper mapper = Mappers.getMapper(FollowAnswerMapper.class);
+    @Autowired
+    private  FollowAnswerMapper mapper;
     private static final FollowAnswer MOCK_ENTITY = new FollowAnswer();
     private static final Answer MOCK_ANSWER = AnswerStub.getEntity();
     private static final Question MOCK_QUESTION = QuestionStub.getEntity();
@@ -40,7 +47,7 @@ public class FollowAnswerMapperTest {
     }
 
     @Test
-    void followAnswersToAnswerResponseDtos() {
+    void followAnswersToAnswerResponseDtosTest() {
         List<FollowAnswer> followAnswers = List.of(MOCK_ENTITY, MOCK_ENTITY);
         List<AnswerDto.FullResponse> expected = List.of(mockFullResponseDto(), mockFullResponseDto());
 

@@ -42,6 +42,10 @@ public class AnswerStub {
         return multiResponseBody;
     }
 
+    private static final long MOCK_ANSWER_ID = 10L;
+    private static final String MOCK_CONTENT = "content_answer";
+    private static final long MOCK_VOTE = 45L;
+
     public static final Answer ENTITY;
     static {
         ENTITY = new Answer();
@@ -58,5 +62,12 @@ public class AnswerStub {
         mockEntity.setContent("content_answer");
         mockEntity.setVote(45L);
         return mockEntity;
+    }
+
+    public static final AnswerDto.Response getResponse() {
+        return new AnswerDto.Response(
+                MOCK_ANSWER_ID, MOCK_CONTENT, MOCK_VOTE,
+                null, null, MemberStub.getSubResponse()
+        );
     }
 }
