@@ -40,7 +40,7 @@ public class FollowQuestionController {
         Page<FollowQuestion> followQuestions
                 = followQuestionService.findFollowQuestionsByMember(page-1, size, memberId);
         List<QuestionDto.SubResponse> response
-                = mapper.followQuestionsToQuestionSubResponseDto(followQuestions.getContent());
+                = mapper.followQuestionsToQuestionSubResponseDtos(followQuestions.getContent());
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(response, followQuestions), HttpStatus.OK

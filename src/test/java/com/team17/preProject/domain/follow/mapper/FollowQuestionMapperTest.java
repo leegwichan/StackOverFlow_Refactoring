@@ -14,6 +14,7 @@ import com.team17.preProject.helper.stub.QuestionStub;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import java.util.List;
 
 @SpringBootTest(classes = {MemberMapperImpl.class, QuestionMapperImpl.class,
         AnswerMapperImpl.class, FollowQuestionMapperImpl.class})
@@ -42,9 +43,10 @@ public class FollowQuestionMapperTest {
 
     @Test
     void followQuestionsToQuestionSubResponseDtoTest() {
-        QuestionDto.SubResponse expected = mockSubResponseDto();
+        List<FollowQuestion> followQuestions = List.of(MOCK_ENTITY, MOCK_ENTITY);
+        List<QuestionDto.SubResponse> expected = List.of(mockSubResponseDto(), mockSubResponseDto());
 
-        QuestionDto.SubResponse result = mapper.questionToQuestionSubResponseDto(MOCK_QUESTION);
+        List<QuestionDto.SubResponse> result = mapper.followQuestionsToQuestionSubResponseDtos(followQuestions);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(expected);
     }
