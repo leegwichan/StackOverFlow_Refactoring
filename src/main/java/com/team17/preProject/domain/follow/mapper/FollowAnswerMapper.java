@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 
 public interface FollowAnswerMapper {
-    default FollowAnswerDto.PostResponse FollowAnswerToFollowAnswerPostResponseDto(FollowAnswer followAnswer) {
+    default FollowAnswerDto.PostResponse followAnswerToFollowAnswerPostResponseDto(FollowAnswer followAnswer) {
         return new FollowAnswerDto.PostResponse(
                 memberToMemberSubResponseDto(followAnswer.getMember()),
                 answerToAnswerResponseDto(followAnswer.getAnswer())

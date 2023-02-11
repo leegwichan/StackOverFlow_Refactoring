@@ -52,7 +52,7 @@ public class FollowAnswerController {
 
         FollowAnswer postFollowAnswer
                 = followAnswerService.createFollowAnswer(requestBody.getMemberId(), requestBody.getAnswerId());
-        FollowAnswerDto.PostResponse response = mapper.FollowAnswerToFollowAnswerPostResponseDto(postFollowAnswer);
+        FollowAnswerDto.PostResponse response = mapper.followAnswerToFollowAnswerPostResponseDto(postFollowAnswer);
 
         return new ResponseEntity(
                 new SingleResponseDto<>(response), HttpStatus.OK);
