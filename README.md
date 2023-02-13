@@ -3,17 +3,33 @@
 ### 개요
 
 - CodeStates Software Engineering Bootcamp에서 진행한 Pre-Project(22.08.23 ~ 09.06) 의 내용을 리팩토링 하는 것을 목표로 함
-  - 주제 : **StackOverflow Clone Coding**
-  - 상세 : Spring / Java 로 구성한 Backend 부분을 리팩토링 하는 것을 목표로 함
-  - [요구사항 명세서](https://docs.google.com/spreadsheets/d/1TU4THwrGQrICJ5WpIfY0uErBtV6B2lUz78Vv8mRqHBo/edit?usp=sharing), [테이블 명세서](https://docs.google.com/spreadsheets/d/1Yg-kKvSE6SDEX1lCuml5SNfR6vANYRMWO88cIARptgg/edit?usp=sharing) 
+  - 제가 담당했던 Backend 부분으로 한정하여 진행함
 
-### 1차 목표 (23.02.05 ~)
+- Pre-Project 설명
+  - 주제 : **StackOverflow Clone Coding**
+  - 내용 : Frontend는 React, Backend는 Spring을 이용해 기존에 있는 StackOverflow 웹 사이트의 Clone을 만들어본다.
+  - 관련 문서 : [요구사항 명세서](https://docs.google.com/spreadsheets/d/1TU4THwrGQrICJ5WpIfY0uErBtV6B2lUz78Vv8mRqHBo/edit?usp=sharing), [테이블 명세서](https://docs.google.com/spreadsheets/d/1Yg-kKvSE6SDEX1lCuml5SNfR6vANYRMWO88cIARptgg/edit?usp=sharing) 
+
+### 목표
+- public method 마다 Unit Test를 작성하여 일부 코드 변경시 다른 class에 번지는 여파를 알 수 있게 한다.
+- 다른 사람이 읽기 수월하도록 Code Convention을 정하고, 이를 지키며 리팩토링을 한다.
+- 리팩토링시 떠오르는 개선사항들을 기록하고 개선해본다.
+- 시간이 된다면, 요구사항 명세서 Advenced에 있는 내용을 구현해본다.
+
+### Sprint 1 (23.02.05 ~ 23.02.13)
 
 - 다수의 회사들에서 사용하는 Jira를 사용해보고 익히기
-- 각 부분마다 Unit Test를 작성하여 한 부분 변경시 다른 부분에 번지는 여파를 알 수 있도록 함
-- 기능에만 중점을 두고 작성했던 코드들을 보기 유용하게 작성하는 것을 목표로 함
-  - 리팩토링을 진행하고 중점을 두고 생각했던 점 등을 정리하기
-- Code Convention/ Git Convention 을 정하고 이를 지키서 코드를 작성함
+- Mapstruct 관련 interface Unit Test를 작성하기
+- Mapstruct 관련 interface 리팩토링 실시
+  - 레퍼런스를 참고하여 최대한 라이브러리의 내용을 이용할 것
+- Git Convention 을 정하고 이를 지키서 commit 실시
+
+### Sprint 2  (23.02.14 ~ )
+- Code Convention 완성, Git branch 관리 방법 작성
+- Service 관련 code의 Unit Test 작성
+- Service 관련 code를 Code Convention에 맞추어 리팩토링 실시
+- helper package에 있는 code들 Unit Test 작성 & 리팩토링 실시
+  - EmailSender, PasswordCreator, S3ImageUpload
 
 ### Code Convention
 - 기본적인 Convention
@@ -52,3 +68,4 @@
 
 ### 기타
 - README는 아직 미완성이므로 중간중간 업데이트 될 수 있습니다.
+- [문제 해결 & 회고록](https://velog.io/@gwichanlee/series/StackOverflow-Clone-Refactoring)
