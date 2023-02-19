@@ -24,7 +24,7 @@
   - 레퍼런스를 참고하여 최대한 라이브러리의 내용을 이용할 것
 - Git Convention 을 정하고 이를 지키서 commit 실시
 
-### Sprint 2  (23.02.14 ~ )
+### Sprint 2  (23.02.17 ~ )
 - Code Convention 완성, Git branch 관리 방법 작성
 - Service 관련 code의 Unit Test 작성
 - Service 관련 code를 Code Convention에 맞추어 리팩토링 실시
@@ -48,6 +48,7 @@
 
 ### Git Convention
 
+#### Git Message Convention
 - 전반적으로 [해당 링크](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)의 규칙을 따른다.
     ```text
     <issue key> <type>(<scope>): <subject>
@@ -57,14 +58,30 @@
     <footer>
     ```
   - issue key : Jira에서 사용하는 Issue의 key를 넣음
-    - Jira에서 자동으로 commit과 issue가 연결되어 보기 용이하게 함
   - type : 해당 커밋의 타입을 적음
-    - feat (기능 구현), fix (버그 수정), docs (문서화), style (형식 맞추기, 세미콜론 넣기, …), refactor (리팩토링), test (미처 추가하지 못한 테스트 및 테스트 케이스 추가), chore (유지 보수)
+    - feat, fix, docs, style, refactor, test, chore
   - scope : 범위를 지정하는 모든 것이 될 수 있다[
     - 파일명, 도메인명, location, browser, complie ...]()
   - subject : 현재 작업을 간략히 한줄로 요약
   - body : 변경에 대한 동기에 대해 작성, 이전과 달라진 점 작성
   - footer : 주요 변경 사항, ...
+
+#### 브랜칭 전략
+- main branch에 현재까지 작업한 내용이 보일 수 있도록 함
+- 기능 구현 시에는 main에서 브랜치를 생성해서 작업 후, 다시 main으로 PR을 하는 형식으로 진행
+- README 수정과 같은 문서 작업 등은 따로 branch를 생성하지 않고 main에서 작업하는 것도 허용함
+  - Auto Deploy와 같은 작업을 하지 않았기 때문에 main에서 직접 커밋을 허용
+
+#### Branch Naming Convention
+- Jira의 Issue에 branch를 참조하기 위해 다음과 같은 형식 사용
+  ```
+  <issue key>/<type>/<scope>
+  ```
+    - issue key : Jira에서 사용하는 Issue의 key를 넣음
+    - type : feat, refactor, chore 등등
+    - scope : 작업 대상 작성 (형식 : snake_case)
+    - ex) SCR-17/refactor/member_service
+
 
 ### 기타
 - README는 아직 미완성이므로 중간중간 업데이트 될 수 있습니다.
