@@ -2,6 +2,7 @@ package com.team17.preProject.domain.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import com.team17.preProject.domain.member.entity.Member;
@@ -43,5 +44,25 @@ public class MemberServiceTest {
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.findMember(1L));
         assertThat(result.getMessage()).isEqualTo("Member not found");
+    }
+
+    @Test
+    void createMemberTest() {
+        Member expected = MEMBER_STUB;
+        given(repository.findByEmail(any())).willReturn(null);
+        given(repository.save(any())).willReturn(MEMBER_STUB);
+
+        Member result = memberService.createMember(MEMBER_STUB);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void createMemberTest_whenEmailOverlapped() {
+        given(repository.findByEmail(any())).willReturn(MEMBER_STUB);
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> memberService.createMember(MEMBER_STUB));
+        assertThat(result.getMessage()).isEqualTo("Already exist email");
     }
 }
