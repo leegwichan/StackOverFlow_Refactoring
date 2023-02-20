@@ -1,6 +1,7 @@
 package com.team17.preProject.domain.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -77,6 +78,23 @@ public class MemberServiceTest {
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.updateMember(MEMBER_STUB));
+        assertThat(result.getMessage()).isEqualTo("Member not found");
+    }
+
+    @Test
+    void deleteMemberTest() {
+        given(repository.findById(1L)).willReturn(Optional.of(MEMBER_STUB));
+
+        assertDoesNotThrow(() -> memberService.deleteMember(1L));
+    }
+
+    @Test
+    void deleteMemberTest_whenMemberNotFound() {
+        long memberId = 1L;
+        given(repository.findById(memberId)).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> memberService.deleteMember(memberId));
         assertThat(result.getMessage()).isEqualTo("Member not found");
     }
 }
