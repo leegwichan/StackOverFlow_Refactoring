@@ -65,4 +65,18 @@ public class MemberServiceTest {
                 () -> memberService.createMember(MEMBER_STUB));
         assertThat(result.getMessage()).isEqualTo("Already exist email");
     }
+
+    @Test
+    void updateMemberTest() {
+        // 리팩토링 후 빌더 패턴 적용 후, 작성
+    }
+
+    @Test
+    void updateMemberTest_whenMemberNotFound() {
+        given(repository.findById(MEMBER_STUB.getMemberId())).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> memberService.updateMember(MEMBER_STUB));
+        assertThat(result.getMessage()).isEqualTo("Member not found");
+    }
 }
