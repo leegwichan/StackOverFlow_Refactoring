@@ -1,6 +1,5 @@
 package com.team17.preProject.helper.password;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +12,8 @@ public class TemporaryPassword {
     private static final char END_LETTER = 'z';
     private static final int PASSWORD_LENGTH = 10;
 
-    private final BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final Random random = new Random();
-
-    public TemporaryPassword(BCryptPasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
 
     public PasswordDto create(){
         String generatedPassword = createRandomPassword();
@@ -36,7 +31,7 @@ public class TemporaryPassword {
     }
 
     private char createRandomLetter() {
-        int randomASCIICode = START_LETTER + (int) (random.nextFloat() * (START_LETTER - END_LETTER + 1));
+        int randomASCIICode = START_LETTER + random.nextInt(END_LETTER - START_LETTER);
         char randomLetter = (char) randomASCIICode;
         return randomLetter;
     }
