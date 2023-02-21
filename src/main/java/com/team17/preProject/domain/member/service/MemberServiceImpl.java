@@ -81,7 +81,7 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.delete(findMember);
     }
 
-    public Member findVerifiedMember(long memberId){
+    private Member findVerifiedMember(long memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember = optionalMember.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));

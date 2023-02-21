@@ -44,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Page<Question> findQuestionsByMemberID(int page, int size, long memberId) {
-        Member member = memberService.findVerifiedMember(memberId);
+        Member member = memberService.findMember(memberId);
         return questionRepository.findByMember(member,
                 PageRequest.of(page, size, Sort.by("questionId").descending()));
     }

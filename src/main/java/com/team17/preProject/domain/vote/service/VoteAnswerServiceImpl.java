@@ -29,7 +29,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
 
     @Override
     public VoteAnswer voteGood(long memberId, long answerId) {
-        Member member = memberService.findVerifiedMember(memberId);
+        Member member = memberService.findMember(memberId);
         Answer answer = answerService.findVerifiedAnswer(answerId);
         VoteAnswer voteAnswer = repository.findByMemberAndAnswer(member, answer);
 
@@ -50,7 +50,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
 
     @Override
     public VoteAnswer voteBad(long memberId, long answerId) {
-        Member member = memberService.findVerifiedMember(memberId);
+        Member member = memberService.findMember(memberId);
         Answer answer = answerService.findVerifiedAnswer(answerId);
         VoteAnswer voteAnswer = repository.findByMemberAndAnswer(member, answer);
 

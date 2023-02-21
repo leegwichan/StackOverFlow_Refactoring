@@ -29,14 +29,14 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
     @Override
     public Page<FollowAnswer> findFollowAnswerByMember(int page, int size, long memberId) {
 
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         return repository.findByMember(findMember,
                 PageRequest.of(page, size, Sort.by("faId").descending()));
     }
 
     @Override
     public FollowAnswer createFollowAnswer(long memberId, long answerId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         Answer findAnswer = answerService.findVerifiedAnswer(answerId);
 
         findFollowAnswerExpectNull(findMember, findAnswer);
@@ -50,7 +50,7 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
 
     @Override
     public void deleteFollowAnswer(long memberId, long answerId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         Answer findAnswer = answerService.findVerifiedAnswer(answerId);
         FollowAnswer followAnswer = findFollowExceptionExceptPresent(findMember, findAnswer);
         repository.delete(followAnswer);
