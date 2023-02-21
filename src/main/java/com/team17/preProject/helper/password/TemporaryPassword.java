@@ -20,11 +20,11 @@ public class TemporaryPassword {
         this.encoder = encoder;
     }
 
-    public String[] create(){
+    public PasswordDto create(){
         String generatedPassword = createRandomPassword();
         String encodedPassword = encoder.encode(generatedPassword);
 
-        return new String[]{generatedPassword, encodedPassword};
+        return new PasswordDto(generatedPassword, encodedPassword);
     }
 
     private String createRandomPassword() {
