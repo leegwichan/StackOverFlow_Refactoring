@@ -21,17 +21,23 @@ public class TemporaryPassword {
     }
 
     public String[] create(){
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            int randomLetter =
-                    START_LETTER + (int) (random.nextFloat() * (START_LETTER - END_LETTER + 1));
-            sb.append((char) randomLetter);
-        }
-
-        String generatedPassword = sb.toString();
+        String generatedPassword = createRandomPassword();
         String encodedPassword = encoder.encode(generatedPassword);
 
         return new String[]{generatedPassword, encodedPassword};
+    }
+
+    private String createRandomPassword() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < PASSWORD_LENGTH; i++) {
+            sb.append(createRandomLetter());
+        }
+        return sb.toString();
+    }
+
+    private char createRandomLetter() {
+        int randomASCIICode = START_LETTER + (int) (random.nextFloat() * (START_LETTER - END_LETTER + 1));
+        char randomLetter = (char) randomASCIICode;
+        return randomLetter;
     }
 }
