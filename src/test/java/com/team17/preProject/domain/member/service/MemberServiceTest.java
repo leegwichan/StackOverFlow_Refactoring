@@ -97,4 +97,25 @@ public class MemberServiceTest {
                 () -> memberService.deleteMember(memberId));
         assertThat(result.getMessage()).isEqualTo("Member not found");
     }
+
+    @Test
+    void resetPasswordByEmailTest() {
+        // 리팩토링 이후 추가 작성 예정
+        String stubEmail = MEMBER_STUB.getEmail();
+
+        given(repository.findByEmail(stubEmail)).willReturn(MEMBER_STUB);
+
+        // assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
+    }
+
+    @Test
+    void resetPasswordByEmailTest_whenMemberNotFound() {
+        String stubEmail = "emamil@email.com";
+        given(repository.findByEmail(stubEmail)).willReturn(null);
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> memberService.resetPasswordByEmail(stubEmail));
+        assertThat(result.getMessage()).isEqualTo("Member not found");
+    }
+
 }
