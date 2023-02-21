@@ -10,7 +10,7 @@ import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.repository.MemberRepository;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.helper.email.EmailSender;
-import com.team17.preProject.helper.password.NewPassword;
+import com.team17.preProject.helper.password.TemporaryPassword;
 import com.team17.preProject.helper.stub.MemberStub;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class MemberServiceTest {
     @Autowired private MemberService memberService;
     @MockBean private MemberRepository repository;
     @MockBean private EmailSender emailSender;
-    @MockBean private NewPassword newPassword;
+    @MockBean private TemporaryPassword temporaryPassword;
 
     private static final Member MEMBER_STUB = MemberStub.ENTITY;
 

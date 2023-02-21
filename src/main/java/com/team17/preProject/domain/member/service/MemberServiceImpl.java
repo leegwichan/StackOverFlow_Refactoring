@@ -4,7 +4,7 @@ import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
 import com.team17.preProject.helper.email.EmailSender;
-import com.team17.preProject.helper.password.NewPassword;
+import com.team17.preProject.helper.password.TemporaryPassword;
 import com.team17.preProject.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService{
     private final EmailSender emailSender;
 
     private final MemberRepository memberRepository;
-    private final NewPassword newPassword;
+    private final TemporaryPassword temporaryPassword;
 
     @Override
     public Member findMember(long memberId) {
@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService{
         try {
 
             String title = "TEAM17 StackOverflow 클론 비밀번호 변경되었습니다";
-            String[] passwordArray = newPassword.create();
+            String[] passwordArray = temporaryPassword.create();
             String password = passwordArray[0];
             encodePassword = passwordArray[1];
             String content = "당신의 비밀번호는 " + password + "로 변경되었습니다. \n 페이지로 가서 비밀번호를 바꿔주세요.";

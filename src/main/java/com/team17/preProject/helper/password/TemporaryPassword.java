@@ -8,7 +8,7 @@ import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
-public class NewPassword {
+public class TemporaryPassword {
 
     private final BCryptPasswordEncoder encoder;
 
