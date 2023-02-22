@@ -33,7 +33,7 @@ public class MemberStub {
 
     static {
         requestBody = new HashMap<>();
-        requestBody.put(HttpMethod.PATCH, new MemberDto.Patch("GillDong Hong1",
+        requestBody.put(HttpMethod.PATCH, new MemberDto.Patch(1L,"GillDong Hong1",
                 Stub.getProfileImage(), "서울1", "백엔드 개발자입니다.1", "저는 ~~~~~~~~~~~~~~ 를 좋아합니다.1"));
 
         singleResponseBody = new MemberDto.Response(1,"gillDong1@gmail.com","GillDong Hong1",
@@ -71,31 +71,29 @@ public class MemberStub {
 //        return subResponse;
 //    }
 
-    public static final Member ENTITY;
-    static {
-        ENTITY = new Member();
-        ENTITY.setMemberId(5L);
-        ENTITY.setEmail("email@email.com");
-        ENTITY.setDisplayName("name");
-        ENTITY.setImage("https://img");
-        ENTITY.setLocation("location");
-        ENTITY.setMemberTitle("title");
-        ENTITY.setAboutMe("aboutMe");
-    }
+    public static final Member ENTITY = Member.builder()
+            .memberId(MOCK_MEMBER_ID)
+            .email(MOCK_EMAIL)
+            .displayName(MOCK_DISPLAY_NAME)
+            .image(MOCK_IMAGE)
+            .location(MOCK_LOCATION)
+            .memberTitle(MOCK_MEMBER_TITLE)
+            .aboutMe(MOCK_ABOUT_ME)
+            .build();
+
     public static final MemberDto.SubResponse SUB_RESPONSE = new MemberDto.SubResponse(
             ENTITY.getMemberId(), ENTITY.getEmail(), ENTITY.getDisplayName(), ENTITY.getImage());
 
-    public static Member getEntity() {
-        Member mockMember = new Member();
-        mockMember.setMemberId(MOCK_MEMBER_ID);
-        mockMember.setEmail(MOCK_EMAIL);
-        mockMember.setDisplayName(MOCK_DISPLAY_NAME);
-        mockMember.setImage(MOCK_IMAGE);
-        mockMember.setLocation(MOCK_LOCATION);
-        mockMember.setMemberTitle(MOCK_MEMBER_TITLE);
-        mockMember.setAboutMe(MOCK_ABOUT_ME);
-
-        return mockMember;
+    public static Member getChangeableEntity() {
+        return Member.builder()
+                .memberId(MOCK_MEMBER_ID)
+                .email(MOCK_EMAIL)
+                .displayName(MOCK_DISPLAY_NAME)
+                .image(MOCK_IMAGE)
+                .location(MOCK_LOCATION)
+                .memberTitle(MOCK_MEMBER_TITLE)
+                .aboutMe(MOCK_ABOUT_ME)
+                .build();
     }
 
     public static MemberDto.SubResponse getSubResponse() {

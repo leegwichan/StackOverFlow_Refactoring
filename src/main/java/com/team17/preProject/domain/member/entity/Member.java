@@ -7,6 +7,8 @@ import com.team17.preProject.domain.follow.entity.FollowQuestion;
 import com.team17.preProject.domain.question.entity.Question;
 import com.team17.preProject.domain.vote.entity.VoteAnswer;
 import com.team17.preProject.domain.vote.entity.VoteQuestion;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,10 +16,12 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
-@Setter
 @Entity
 public class Member extends Auditable {
 
@@ -77,4 +81,16 @@ public class Member extends Auditable {
             cascade = CascadeType.REMOVE)
     private List<VoteAnswer> voteAnswers = new ArrayList<>();
 
+
+    public void updatePassword(String encodedPassword) {
+        this.password = encodedPassword;
+    }
+
+    public void updateMember(Member member) {
+        this.image = Optional.ofNullable(member.image).orElse(this.image);
+        this.displayName = Optional.ofNullable(member.displayName).orElse(this.displayName);
+        this.location = Optional.ofNullable(member.location).orElse(this.location);
+        this.memberTitle = Optional.ofNullable(member.memberTitle).orElse(this.memberTitle);
+        this.aboutMe = Optional.ofNullable(member.aboutMe).orElse(this.aboutMe);
+    }
 }

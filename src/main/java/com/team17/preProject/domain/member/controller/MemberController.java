@@ -54,7 +54,7 @@ public class MemberController {
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post requestBody){
 
         Member member = mapper.memberPostDtoToMember(requestBody);
-        member.setPassword(bCryptPasswordEncoder.encode(requestBody.getPassword()));
+        member.updatePassword(bCryptPasswordEncoder.encode(requestBody.getPassword()));
 
         Member postMember = memberService.createMember(member);
         MemberDto.Response response = mapper.memberToMemberResponseDto(member);
@@ -71,8 +71,8 @@ public class MemberController {
                                       Authentication authentication) {
         securityService.checkMemberEqual(authentication, memberId);
 
+        requestBody.setMemberId(memberId);
         Member member = mapper.memberPatchDtoToMember(requestBody);
-        member.setMemberId(memberId);
 
         Member updateMember = memberService.updateMember(member);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
@@ -93,10 +93,9 @@ public class MemberController {
         String url = s3Upload.upload(multipartFile.getInputStream(),
                 multipartFile.getOriginalFilename(), fileSize);
 
-        Member member = new Member();
-        member.setMemberId(memberId);
-        member.setImage(url);
-
+        Member member = Member.builder()
+                .memberId(memberId)
+                .image(url).build();
         Member updateMember = memberService.updateMember(member);
         MemberDto.Response response = mapper.memberToMemberResponseDto(updateMember);
         return new ResponseEntity<>(

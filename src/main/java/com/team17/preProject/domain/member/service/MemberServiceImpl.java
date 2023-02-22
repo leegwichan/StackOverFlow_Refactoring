@@ -35,13 +35,12 @@ public class MemberServiceImpl implements MemberService{
         PasswordDto newPassword = temporaryPassword.create();
         temporaryPasswordSender.send(email, newPassword.getDecodedPassword());
 
-        findMember.setPassword(newPassword.getEncodedPassword());
+        findMember.updatePassword(newPassword.getEncodedPassword());
         memberRepository.save(findMember);
     }
 
     @Override
     public Member createMember(Member member) {
-
         findMemberByEmailExpectNull(member.getEmail());
         return memberRepository.save(member);
     }
@@ -50,17 +49,7 @@ public class MemberServiceImpl implements MemberService{
     public Member updateMember(Member member) {
         Member findMember = findVerifiedMember(member.getMemberId());
 
-        Optional.ofNullable(member.getImage())
-                .ifPresent(image -> findMember.setImage(image));
-        Optional.ofNullable(member.getDisplayName())
-                .ifPresent(displayName -> findMember.setDisplayName(displayName));
-        Optional.ofNullable(member.getLocation())
-                .ifPresent(location -> findMember.setLocation(location));
-        Optional.ofNullable(member.getMemberTitle())
-                .ifPresent(title -> findMember.setMemberTitle(title));
-        Optional.ofNullable(member.getAboutMe())
-                .ifPresent(aboutMe -> findMember.setAboutMe(aboutMe));
-
+        findMember.updateMember(member);
         return memberRepository.save(findMember);
     }
 

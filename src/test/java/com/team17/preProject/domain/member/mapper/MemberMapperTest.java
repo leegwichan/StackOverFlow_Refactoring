@@ -15,14 +15,15 @@ public class MemberMapperTest {
 
     @Test
     void memberPatchDtoToMemberTest() {
-        MemberDto.Patch dto = new MemberDto.Patch("nickname", "http://url", "location",
+        MemberDto.Patch dto = new MemberDto.Patch(1L,"nickname", "http://url", "location",
                 "title", "aboutMe");
-        Member expected = new Member();
-        expected.setDisplayName("nickname");
-        expected.setImage("http://url");
-        expected.setLocation("location");
-        expected.setMemberTitle("title");
-        expected.setAboutMe("aboutMe");
+        Member expected = Member.builder()
+                .memberId(1L)
+                .displayName("nickname")
+                .image("http://url")
+                .location("location")
+                .memberTitle("title")
+                .aboutMe("aboutMe").build();
 
         Member member = memberMapper.memberPatchDtoToMember(dto);
 
@@ -32,10 +33,10 @@ public class MemberMapperTest {
     @Test
     void memberPostDtoToMemberTest() {
         MemberDto.Post dto = new MemberDto.Post("email@naver.com", "password1!", "name");
-        Member expected = new Member();
-        expected.setEmail("email@naver.com");
-        expected.setPassword("password1!");
-        expected.setDisplayName("name");
+        Member expected = Member.builder()
+                .email("email@naver.com")
+                .password("password1!")
+                .displayName("name").build();
 
         Member member = memberMapper.memberPostDtoToMember(dto);
 
