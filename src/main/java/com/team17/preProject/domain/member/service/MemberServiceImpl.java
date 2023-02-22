@@ -29,17 +29,6 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void resetPasswordByEmail(String email) {
-        Member findMember = findMemberByEmailExpectExist(email);
-
-        PasswordDto newPassword = temporaryPassword.create();
-        temporaryPasswordSender.send(email, newPassword.getDecodedPassword());
-
-        findMember.updatePassword(newPassword.getEncodedPassword());
-        memberRepository.save(findMember);
-    }
-
-    @Override
     public Member createMember(Member member) {
         findMemberByEmailExpectNull(member.getEmail());
         return memberRepository.save(member);
@@ -59,17 +48,28 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.delete(findMember);
     }
 
+    @Override
+    public void resetPasswordByEmail(String email) {
+        Member findMember = findMemberByEmailExpectExist(email);
+
+        PasswordDto newPassword = temporaryPassword.create();
+        temporaryPasswordSender.send(email, newPassword.getDecodedPassword());
+
+        findMember.updatePassword(newPassword.getEncodedPassword());
+        memberRepository.save(findMember);
+    }
+
+    @Override
+    public void checkEmailValidate(String email) {
+        findMemberByEmailExpectNull(email);
+    }
+
     private Member findVerifiedMember(long memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember = optionalMember.orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         return findMember;
-    }
-
-    @Override
-    public void checkEmailValidate(String email) {
-        findMemberByEmailExpectNull(email);
     }
 
     private void findMemberByEmailExpectNull(String email){
