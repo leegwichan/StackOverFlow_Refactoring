@@ -21,7 +21,7 @@ public class TemporaryPasswordSender {
         try {
             String content  = String.format(EMAIL_CONTENT_FORM, temporaryPassword);
             emailSender.send(email, EMAIL_TITLE, content);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             throw new BusinessLogicException(ExceptionCode.FAIL_SEND_EMAIL_BY_SERVER);
         }
     }
