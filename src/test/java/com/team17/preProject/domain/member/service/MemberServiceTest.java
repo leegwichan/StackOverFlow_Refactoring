@@ -9,7 +9,8 @@ import static org.mockito.BDDMockito.given;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.repository.MemberRepository;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
-import com.team17.preProject.helper.email.EmailSender;
+import com.team17.preProject.helper.email.password.TemporaryPasswordSender;
+import com.team17.preProject.helper.password.PasswordDto;
 import com.team17.preProject.helper.password.TemporaryPassword;
 import com.team17.preProject.helper.stub.MemberStub;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,8 @@ public class MemberServiceTest {
 
     @Autowired private MemberService memberService;
     @MockBean private MemberRepository repository;
-    @MockBean private EmailSender emailSender;
     @MockBean private TemporaryPassword temporaryPassword;
+    @MockBean private TemporaryPasswordSender temporaryPasswordSender;
 
     private static final Member MEMBER_STUB = MemberStub.ENTITY;
 
@@ -102,10 +103,10 @@ public class MemberServiceTest {
     void resetPasswordByEmailTest() {
         // 리팩토링 이후 추가 작성 예정
         String stubEmail = MEMBER_STUB.getEmail();
-
         given(repository.findByEmail(stubEmail)).willReturn(MEMBER_STUB);
+        given(temporaryPassword.create()).willReturn(new PasswordDto("aaa", "bbb"));
 
-        // assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
+        assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
     }
 
     @Test
@@ -117,5 +118,4 @@ public class MemberServiceTest {
                 () -> memberService.resetPasswordByEmail(stubEmail));
         assertThat(result.getMessage()).isEqualTo("Member not found");
     }
-
 }

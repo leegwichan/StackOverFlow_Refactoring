@@ -4,6 +4,7 @@ import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
 import com.team17.preProject.helper.email.EmailSender;
+import com.team17.preProject.helper.email.password.TemporaryPasswordSender;
 import com.team17.preProject.helper.password.PasswordDto;
 import com.team17.preProject.helper.password.TemporaryPassword;
 import com.team17.preProject.domain.member.repository.MemberRepository;
@@ -18,10 +19,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
-    private final EmailSender emailSender;
-
     private final MemberRepository memberRepository;
     private final TemporaryPassword temporaryPassword;
+    private final TemporaryPasswordSender temporaryPasswordSender;
 
     @Override
     public Member findMember(long memberId) {
@@ -30,24 +30,12 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void resetPasswordByEmail(String email) {
-
         Member findMember = findMemberByEmailExpectExist(email);
 
-        String encodePassword;
-        try {
+        PasswordDto newPassword = temporaryPassword.create();
+        temporaryPasswordSender.send(email, newPassword.getDecodedPassword());
 
-            String title = "TEAM17 StackOverflow 클론 비밀번호 변경되었습니다";
-            PasswordDto passwordDto = temporaryPassword.create();
-            String password = passwordDto.getDecodedPassword();
-            encodePassword = passwordDto.getEncodedPassword();
-            String content = "당신의 비밀번호는 " + password + "로 변경되었습니다. \n 페이지로 가서 비밀번호를 바꿔주세요.";
-
-            emailSender.setEmailSenderSendOne(findMember.getEmail(), title, content);
-        } catch (Exception e){
-            throw new BusinessLogicException(ExceptionCode.FAIL_SEND_EMAIL);
-        }
-
-        findMember.setPassword(encodePassword);
+        findMember.setPassword(newPassword.getEncodedPassword());
         memberRepository.save(findMember);
     }
 
