@@ -13,6 +13,7 @@ public enum ExceptionCode {
     ALREADY_VOTE_GOOD(400, "Already vote good"),
     ALREADY_VOTE_BAD(400, "Already vote bad"),
     FAIL_SEND_EMAIL(300, "이메일 주소가 잘못되었거나 서버에서 메일을 보내지 못했습니다."),
+    FAIL_SEND_EMAIL_BY_SERVER(500, "서버에서 이메일을 전송하지 못했습니다."),
     NOT_VERIFIED_ANSWER_OF_QUESTION(400, "해당 질문의 답변이 아닙니다."),
     ALREADY_EXIST_BEST_ANSWER(400, "Already exist best answer"),
     MEMBER_NOT_MATCHED(400, "요청한 회원 식별자와 로그인 유저의 정보가 일치하지 않습니다."),

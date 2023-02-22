@@ -10,6 +10,11 @@ public class SimpleEmailSender implements EmailSendable{
     private final JavaMailSender javaMailSender;
 
     @Override
+    public void send(String to, String subject, String message) throws InterruptedException {
+        send(new String[]{to}, subject, message);
+    }
+
+    @Override
     public void send(String[] to, String subject, String message) throws InterruptedException {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(to);
