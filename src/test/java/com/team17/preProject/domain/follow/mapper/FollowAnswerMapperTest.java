@@ -26,7 +26,7 @@ public class FollowAnswerMapperTest {
     private  FollowAnswerMapper mapper;
     private static final FollowAnswer MOCK_ENTITY = new FollowAnswer();
     private static final Answer MOCK_ANSWER = AnswerStub.getEntity();
-    private static final Question MOCK_QUESTION = QuestionStub.getEntity();
+    private static final Question MOCK_QUESTION = QuestionStub.getChangeableEntity();
     static {
         MOCK_QUESTION.setMember(MemberStub.getChangeableEntity());
         MOCK_ANSWER.setQuestion(MOCK_QUESTION);
