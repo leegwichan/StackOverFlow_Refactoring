@@ -34,6 +34,7 @@ public class QuestionServiceTest {
         long questionId = questionStub.getQuestionId();
         long beforeView = questionStub.getView();
         given(repository.findById(questionId)).willReturn(Optional.of(questionStub));
+        given(repository.save(any())).willReturn(questionStub);
 
         Question result = questionService.findQuestion(questionId);
 

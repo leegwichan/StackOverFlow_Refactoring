@@ -11,13 +11,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Optional;
+
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class QuestionServiceImpl implements QuestionService{
+public class QuestionServiceImpl implements QuestionService {
 
     private static final Sort DESCENDING_QUESTION_ID = Sort.by("questionId").descending();
 
@@ -28,8 +28,7 @@ public class QuestionServiceImpl implements QuestionService{
     public Question findQuestion(long questionId) {
         Question question = findVerifiedQuestion(questionId);
         question.setView(question.getView() +1);
-        questionRepository.save(question);
-        return question;
+        return questionRepository.save(question);
     }
 
     @Override
@@ -74,7 +73,6 @@ public class QuestionServiceImpl implements QuestionService{
         return questionRepository.save(updateQuestion);
     }
 
-
     @Override
     public void deleteQuestion(long questionId) {
         Question findQuestion = findVerifiedQuestion(questionId);
@@ -82,10 +80,7 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     public Question findVerifiedQuestion(long questionId){
-        Optional<Question> optionalQuestion = questionRepository.findById(questionId);
-        Question findQuestion = optionalQuestion.orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
-        return findQuestion;
+        return questionRepository.findById(questionId).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 }
