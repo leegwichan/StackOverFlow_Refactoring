@@ -28,14 +28,14 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
 
     @Override
     public Page<FollowQuestion> findFollowQuestionsByMember(int page, int size, long memberId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         return repository.findByMember(findMember,
                 PageRequest.of(page, size, Sort.by("fqId").descending()));
     }
 
     @Override
     public FollowQuestion createFollowQuestion(long memberId, long questionId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         Question findQuestion = questionService.findVerifiedQuestion(questionId);
 
         findFollowQuestionExpectNull(findMember, findQuestion);
@@ -49,7 +49,7 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
 
     @Override
     public void deleteFollowQuestion(long memberId, long questionId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         Question findQuestion = questionService.findVerifiedQuestion(questionId);
 
         FollowQuestion followQuestion = findFollowQuestionExpectPresent(findMember, findQuestion);

@@ -26,8 +26,7 @@ public class QuestionMapperTest {
     @Test
     void questionPostDtoToQuestionTest() {
         QuestionDto.Post dto = new QuestionDto.Post("title", "content", 5L);
-        Member member = new Member();
-        member.setMemberId(5L);
+        Member member = Member.builder().memberId(5L).build();
         Question expected = new Question();
         expected.setTitle("title");
         expected.setContent("content");

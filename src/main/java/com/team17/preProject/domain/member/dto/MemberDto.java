@@ -35,6 +35,7 @@ public class MemberDto {
     @Getter
     @Setter
     public static class Patch{
+        private long memberId;
 
         @Size(max = 30, message = "display 의 최대 글자는 30자 입니다.")
         private String displayName;

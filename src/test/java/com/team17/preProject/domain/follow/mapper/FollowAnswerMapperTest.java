@@ -28,11 +28,11 @@ public class FollowAnswerMapperTest {
     private static final Answer MOCK_ANSWER = AnswerStub.getEntity();
     private static final Question MOCK_QUESTION = QuestionStub.getEntity();
     static {
-        MOCK_QUESTION.setMember(MemberStub.getEntity());
+        MOCK_QUESTION.setMember(MemberStub.getChangeableEntity());
         MOCK_ANSWER.setQuestion(MOCK_QUESTION);
-        MOCK_ANSWER.setMember(MemberStub.getEntity());
+        MOCK_ANSWER.setMember(MemberStub.getChangeableEntity());
         MOCK_ENTITY.setAnswer(MOCK_ANSWER);
-        MOCK_ENTITY.setMember(MemberStub.getEntity());
+        MOCK_ENTITY.setMember(MemberStub.getChangeableEntity());
     }
 
     @Test

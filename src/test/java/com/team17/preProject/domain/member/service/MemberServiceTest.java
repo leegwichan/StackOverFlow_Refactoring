@@ -9,7 +9,8 @@ import static org.mockito.BDDMockito.given;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.repository.MemberRepository;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
-import com.team17.preProject.helper.email.EmailSender;
+import com.team17.preProject.helper.email.password.TemporaryPasswordSender;
+import com.team17.preProject.helper.password.PasswordDto;
 import com.team17.preProject.helper.password.TemporaryPassword;
 import com.team17.preProject.helper.stub.MemberStub;
 import org.junit.jupiter.api.Test;
@@ -23,8 +24,8 @@ public class MemberServiceTest {
 
     @Autowired private MemberService memberService;
     @MockBean private MemberRepository repository;
-    @MockBean private EmailSender emailSender;
     @MockBean private TemporaryPassword temporaryPassword;
+    @MockBean private TemporaryPasswordSender temporaryPasswordSender;
 
     private static final Member MEMBER_STUB = MemberStub.ENTITY;
 
@@ -50,7 +51,7 @@ public class MemberServiceTest {
     @Test
     void createMemberTest() {
         Member expected = MEMBER_STUB;
-        given(repository.findByEmail(any())).willReturn(null);
+        given(repository.findByEmail(any())).willReturn(Optional.empty());
         given(repository.save(any())).willReturn(MEMBER_STUB);
 
         Member result = memberService.createMember(MEMBER_STUB);
@@ -60,7 +61,7 @@ public class MemberServiceTest {
 
     @Test
     void createMemberTest_whenEmailOverlapped() {
-        given(repository.findByEmail(any())).willReturn(MEMBER_STUB);
+        given(repository.findByEmail(any())).willReturn(Optional.of(MEMBER_STUB));
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.createMember(MEMBER_STUB));
@@ -69,7 +70,25 @@ public class MemberServiceTest {
 
     @Test
     void updateMemberTest() {
-        // 리팩토링 후 빌더 패턴 적용 후, 작성
+        Member findMember = MemberStub.getChangeableEntity();
+        Member updateInfo = Member.builder()
+                .memberId(findMember.getMemberId())
+                .aboutMe("update aboutMe")
+                .displayName("update display name").build();
+        Member expected = Member.builder()
+                .memberId(findMember.getMemberId())
+                .email(findMember.getEmail())
+                .image(findMember.getImage())
+                .location(findMember.getLocation())
+                .memberTitle(findMember.getMemberTitle())
+                .displayName(updateInfo.getDisplayName())
+                .aboutMe(updateInfo.getAboutMe()).build();
+        given(repository.findById(updateInfo.getMemberId())).willReturn(Optional.of(findMember));
+        given(repository.save(findMember)).willReturn(findMember);
+
+        Member result = memberService.updateMember(updateInfo);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
@@ -102,20 +121,19 @@ public class MemberServiceTest {
     void resetPasswordByEmailTest() {
         // 리팩토링 이후 추가 작성 예정
         String stubEmail = MEMBER_STUB.getEmail();
+        given(repository.findByEmail(stubEmail)).willReturn(Optional.of(MEMBER_STUB));
+        given(temporaryPassword.create()).willReturn(new PasswordDto("aaa", "bbb"));
 
-        given(repository.findByEmail(stubEmail)).willReturn(MEMBER_STUB);
-
-        // assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
+        assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
     }
 
     @Test
     void resetPasswordByEmailTest_whenMemberNotFound() {
         String stubEmail = "emamil@email.com";
-        given(repository.findByEmail(stubEmail)).willReturn(null);
+        given(repository.findByEmail(stubEmail)).willReturn(Optional.empty());
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.resetPasswordByEmail(stubEmail));
         assertThat(result.getMessage()).isEqualTo("Member not found");
     }
-
 }

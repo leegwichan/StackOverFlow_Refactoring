@@ -36,14 +36,14 @@ public class AnswerServiceImpl implements AnswerService{
 
     @Override
     public Page<Answer> findAnswersByMemberId(int page, int size, long memberId) {
-        Member findMember = memberService.findVerifiedMember(memberId);
+        Member findMember = memberService.findMember(memberId);
         return answerRepository.findByMember(findMember,
                 PageRequest.of(page, size, Sort.by("answerId").descending()));
     }
 
     @Override
     public Answer createAnswer(Answer answer) {
-        Member findMember = memberService.findVerifiedMember(answer.getMember().getMemberId());
+        Member findMember = memberService.findMember(answer.getMember().getMemberId());
         answer.setMember(findMember);
         Question findQuestion = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
         answer.setQuestion(findQuestion);
