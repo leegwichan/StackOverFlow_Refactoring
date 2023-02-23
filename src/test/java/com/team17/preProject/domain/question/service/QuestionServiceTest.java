@@ -2,12 +2,15 @@ package com.team17.preProject.domain.question.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.service.MemberService;
 import com.team17.preProject.domain.question.entity.Question;
 import com.team17.preProject.domain.question.repository.QuestionRepository;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
+import com.team17.preProject.helper.stub.MemberStub;
 import com.team17.preProject.helper.stub.QuestionStub;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +48,20 @@ public class QuestionServiceTest {
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> questionService.findQuestion(questionId));
         assertThat(result.getMessage()).isEqualTo("Question not found");
+    }
+
+    @Test
+    void createQuestionTest() {
+        Question question = QuestionStub.getChangeableEntity();
+        Member memberInfo = Member.builder().memberId(1L).build();
+        question.setMember(memberInfo);
+        Member findMember = MemberStub.ENTITY;
+        given(memberService.findMember(memberInfo.getMemberId())).willReturn(findMember);
+        given(repository.save(any())).willReturn(question);
+
+        Question result = questionService.createQuestion(question);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(question);
+        assertThat(result.getMember()).isEqualTo(findMember);
     }
 }
