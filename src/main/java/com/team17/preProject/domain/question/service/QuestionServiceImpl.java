@@ -19,6 +19,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QuestionServiceImpl implements QuestionService{
 
+    private static final Sort DESCENDING_QUESTION_ID = Sort.by("questionId").descending();
+
     private final QuestionRepository questionRepository;
     private final MemberService memberService;
 
@@ -32,21 +34,20 @@ public class QuestionServiceImpl implements QuestionService{
 
     @Override
     public Page<Question> findQuestions(int page, int size) {
-        return questionRepository.findAll(PageRequest.of(page, size,
-                Sort.by("questionId").descending()));
+        return questionRepository.findAll(PageRequest.of(page, size, DESCENDING_QUESTION_ID));
     }
 
     @Override
     public Page<Question> findQuestionsByKeyword(int page, int size, String keyword) {
         return questionRepository.findByTitleContaining(keyword,
-                PageRequest.of(page, size, Sort.by("questionId").descending()));
+                PageRequest.of(page, size, DESCENDING_QUESTION_ID));
     }
 
     @Override
     public Page<Question> findQuestionsByMemberID(int page, int size, long memberId) {
         Member member = memberService.findMember(memberId);
         return questionRepository.findByMember(member,
-                PageRequest.of(page, size, Sort.by("questionId").descending()));
+                PageRequest.of(page, size, DESCENDING_QUESTION_ID));
     }
 
     @Override
