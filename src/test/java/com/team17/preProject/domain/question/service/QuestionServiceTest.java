@@ -1,6 +1,7 @@
 package com.team17.preProject.domain.question.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -77,6 +78,23 @@ public class QuestionServiceTest {
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> questionService.updateQuestion(questionStub));
+        assertThat(result.getMessage()).isEqualTo("Question not found");
+    }
+
+    @Test
+    void deleteQuestionTest() {
+        Question questionStub = QUESTION_STUB;
+        given(repository.findById(questionStub.getQuestionId())).willReturn(Optional.of(questionStub));
+
+        assertDoesNotThrow(() -> questionService.deleteQuestion(questionStub.getQuestionId()));
+    }
+
+    @Test
+    void deleteQuestionTest_whenQuestionNotExist() {
+        given(repository.findById(any())).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> questionService.deleteQuestion(1L));
         assertThat(result.getMessage()).isEqualTo("Question not found");
     }
 }
