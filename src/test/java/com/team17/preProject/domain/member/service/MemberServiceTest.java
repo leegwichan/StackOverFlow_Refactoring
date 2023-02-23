@@ -70,7 +70,25 @@ public class MemberServiceTest {
 
     @Test
     void updateMemberTest() {
-        // 리팩토링 후 빌더 패턴 적용 후, 작성
+        Member findMember = MemberStub.getChangeableEntity();
+        Member updateInfo = Member.builder()
+                .memberId(findMember.getMemberId())
+                .aboutMe("update aboutMe")
+                .displayName("update display name").build();
+        Member expected = Member.builder()
+                .memberId(findMember.getMemberId())
+                .email(findMember.getEmail())
+                .image(findMember.getImage())
+                .location(findMember.getLocation())
+                .memberTitle(findMember.getMemberTitle())
+                .displayName(updateInfo.getDisplayName())
+                .aboutMe(updateInfo.getAboutMe()).build();
+        given(repository.findById(updateInfo.getMemberId())).willReturn(Optional.of(findMember));
+        given(repository.save(findMember)).willReturn(findMember);
+
+        Member result = memberService.updateMember(updateInfo);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
