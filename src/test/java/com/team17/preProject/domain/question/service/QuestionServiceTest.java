@@ -64,4 +64,19 @@ public class QuestionServiceTest {
         assertThat(result).usingRecursiveComparison().isEqualTo(question);
         assertThat(result.getMember()).isEqualTo(findMember);
     }
+
+    @Test
+    void updateQuestionTest() {
+        // Question Builder 패턴 구현 후 테스트 구현 예정
+    }
+
+    @Test
+    void updateQuestionTest_whenQuestionDoesNotExist() {
+        Question questionStub = QUESTION_STUB;
+        given(repository.findById(questionStub.getQuestionId())).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> questionService.updateQuestion(questionStub));
+        assertThat(result.getMessage()).isEqualTo("Question not found");
+    }
 }
