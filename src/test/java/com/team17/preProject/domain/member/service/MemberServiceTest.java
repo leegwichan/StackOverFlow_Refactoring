@@ -51,7 +51,7 @@ public class MemberServiceTest {
     @Test
     void createMemberTest() {
         Member expected = MEMBER_STUB;
-        given(repository.findByEmail(any())).willReturn(null);
+        given(repository.findByEmail(any())).willReturn(Optional.empty());
         given(repository.save(any())).willReturn(MEMBER_STUB);
 
         Member result = memberService.createMember(MEMBER_STUB);
@@ -61,7 +61,7 @@ public class MemberServiceTest {
 
     @Test
     void createMemberTest_whenEmailOverlapped() {
-        given(repository.findByEmail(any())).willReturn(MEMBER_STUB);
+        given(repository.findByEmail(any())).willReturn(Optional.of(MEMBER_STUB));
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.createMember(MEMBER_STUB));
@@ -121,7 +121,7 @@ public class MemberServiceTest {
     void resetPasswordByEmailTest() {
         // 리팩토링 이후 추가 작성 예정
         String stubEmail = MEMBER_STUB.getEmail();
-        given(repository.findByEmail(stubEmail)).willReturn(MEMBER_STUB);
+        given(repository.findByEmail(stubEmail)).willReturn(Optional.of(MEMBER_STUB));
         given(temporaryPassword.create()).willReturn(new PasswordDto("aaa", "bbb"));
 
         assertDoesNotThrow(() -> memberService.resetPasswordByEmail(stubEmail));
@@ -130,7 +130,7 @@ public class MemberServiceTest {
     @Test
     void resetPasswordByEmailTest_whenMemberNotFound() {
         String stubEmail = "emamil@email.com";
-        given(repository.findByEmail(stubEmail)).willReturn(null);
+        given(repository.findByEmail(stubEmail)).willReturn(Optional.empty());
 
         Exception result = assertThrows(BusinessLogicException.class,
                 () -> memberService.resetPasswordByEmail(stubEmail));

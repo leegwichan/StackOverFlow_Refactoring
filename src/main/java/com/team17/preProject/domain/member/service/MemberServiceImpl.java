@@ -3,7 +3,6 @@ package com.team17.preProject.domain.member.service;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
 import com.team17.preProject.exception.businessLogic.ExceptionCode;
-import com.team17.preProject.helper.email.EmailSender;
 import com.team17.preProject.helper.email.password.TemporaryPasswordSender;
 import com.team17.preProject.helper.password.PasswordDto;
 import com.team17.preProject.helper.password.TemporaryPassword;
@@ -73,18 +72,12 @@ public class MemberServiceImpl implements MemberService{
     }
 
     private void findMemberByEmailExpectNull(String email){
-
-        Member findMember = memberRepository.findByEmail(email);
-        if (findMember != null){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_EXIST_EMAIL);
-        }
+        memberRepository.findByEmail(email)
+                .ifPresent(member -> {throw new BusinessLogicException(ExceptionCode.ALREADY_EXIST_EMAIL);});
     }
 
     private Member findMemberByEmailExpectExist(String email){
-        Member findMember = memberRepository.findByEmail(email);
-        if (findMember == null){
-            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-        }
-        return findMember;
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }
