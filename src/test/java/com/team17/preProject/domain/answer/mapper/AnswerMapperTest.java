@@ -22,7 +22,7 @@ public class AnswerMapperTest {
     private AnswerMapper answerMapper;
     private static final Answer MOCK_ANSWER = AnswerStub.getEntity();
     static {
-        MOCK_ANSWER.setQuestion(QuestionStub.getEntity());
+        MOCK_ANSWER.setQuestion(QuestionStub.getChangeableEntity());
         MOCK_ANSWER.getQuestion().setMember(MemberStub.getChangeableEntity());
         MOCK_ANSWER.setMember(MemberStub.getChangeableEntity());
     }

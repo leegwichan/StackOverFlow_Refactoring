@@ -99,7 +99,7 @@ public class QuestionStub {
     private static final long MOCK_VIEW = 100L;
     private static final long MOCK_VOTE = 10L;
 
-    public static Question getEntity() {
+    public static Question getChangeableEntity() {
         Question mockQuestion = new Question();
         mockQuestion.setQuestionId(MOCK_QUESTION_ID);
         mockQuestion.setTitle(MOCK_TITLE);
