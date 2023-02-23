@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -52,33 +51,40 @@ public class Member extends Auditable {
 
     @Column
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private MemberRole role = MemberRole.ROLE_USER;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<Question> postQuestions = new ArrayList<>();
 
     // TODO : 회원 삭제시 어떻게 Answer를 처리할지 논의
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<Answer> postAnswers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE,
             orphanRemoval = true)
+    @Builder.Default
     private List<FollowQuestion> followQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE,
             orphanRemoval = true)
+    @Builder.Default
     private List<FollowAnswer> followAnswers = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<VoteQuestion> voteQuestions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<VoteAnswer> voteAnswers = new ArrayList<>();
 
 
