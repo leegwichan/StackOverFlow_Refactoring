@@ -80,8 +80,8 @@ public class Question extends Auditable {
     }
 
     public void update(Question question) {
-        this.title = Optional.of(question.getTitle()).orElse(this.title);
-        this.content = Optional.of(question.getContent()).orElse(this.content);
+        this.title = Optional.ofNullable(question.getTitle()).orElse(this.title);
+        this.content = Optional.ofNullable(question.getContent()).orElse(this.content);
     }
 
     public void increaseView() {
