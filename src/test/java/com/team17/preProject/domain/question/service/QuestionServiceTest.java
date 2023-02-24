@@ -69,7 +69,24 @@ public class QuestionServiceTest {
 
     @Test
     void updateQuestionTest() {
-        // Question Builder 패턴 구현 후 테스트 구현 예정
+        Question found = QuestionStub.getChangeableEntity();
+        Question update = Question.builder()
+                .title("update title")
+                .build();
+        Question expected = Question.builder()
+                .questionId(found.getQuestionId())
+                .title(update.getTitle())
+                .content(found.getContent())
+                .view(found.getView())
+                .vote(found.getVote())
+                .member(found.getMember())
+                .build();
+        given(repository.findById(update.getQuestionId())).willReturn(Optional.of(found));
+        given(repository.save(found)).willReturn(found);
+
+        Question result = questionService.updateQuestion(update);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
     }
 
     @Test
