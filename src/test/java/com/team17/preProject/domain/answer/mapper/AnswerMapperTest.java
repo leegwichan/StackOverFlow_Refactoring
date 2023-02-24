@@ -23,14 +23,14 @@ public class AnswerMapperTest {
     private static final Answer MOCK_ANSWER = AnswerStub.getEntity();
     static {
         MOCK_ANSWER.setQuestion(QuestionStub.getChangeableEntity());
-        MOCK_ANSWER.getQuestion().setMember(MemberStub.getChangeableEntity());
+        MOCK_ANSWER.getQuestion().setInitialMember(MemberStub.getChangeableEntity());
         MOCK_ANSWER.setMember(MemberStub.getChangeableEntity());
     }
 
     @Test
     void answerPostDtoToAnswer() {
         AnswerDto.Post dto = new AnswerDto.Post("answer_content", 5L, 3L);
-        Question question = new Question(); question.setQuestionId(5L);
+        Question question = Question.builder().questionId(5L).build();
         Member member = Member.builder().memberId(3L).build();
         Answer expected = new Answer();
         expected.setContent("answer_content");

@@ -72,6 +72,7 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
         voteQuestion.setQuestion(question);
         voteQuestion.setVote(vote);
 
+        // 추후 setter 변경 필요
         question.setVote(question.getVote() + vote);
         questionRepository.save(question);
 

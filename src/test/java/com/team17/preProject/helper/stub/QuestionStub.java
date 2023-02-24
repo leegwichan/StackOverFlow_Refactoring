@@ -25,7 +25,7 @@ public class QuestionStub {
     static {
         requestBody = new HashMap<>();
         requestBody.put(HttpMethod.POST, new QuestionDto.Post("Question title입니다.1","Question content 입니다.1",1));
-        requestBody.put(HttpMethod.PATCH, new QuestionDto.Patch("Question title입니다.1변경","Question content 입니다.1변경"));
+        requestBody.put(HttpMethod.PATCH, new QuestionDto.Patch(5L, "Question title입니다.1변경","Question content 입니다.1변경"));
 
         Page<AnswerDto.Response> pageAnswerDto = AnswerStub.getMultiResponseBody();
         MultiResponseDto multiResponseDto = new MultiResponseDto(pageAnswerDto.getContent(), pageAnswerDto);
@@ -72,16 +72,22 @@ public class QuestionStub {
         return multiEntity;
     }
 
-    public static final Question ENTITY = new Question();
+    private static final long MOCK_QUESTION_ID = 5L;
+    private static final String MOCK_TITLE = "question_title";
+    private static final String MOCK_CONTENT = "question_content";
+    private static final long MOCK_VIEW = 100L;
+    private static final long MOCK_VOTE = 10L;
+
+    public static final Question ENTITY = Question.builder()
+            .questionId(MOCK_QUESTION_ID)
+            .title(MOCK_TITLE)
+            .content(MOCK_CONTENT)
+            .view(MOCK_VIEW)
+            .vote(MOCK_VOTE)
+            .member(MemberStub.ENTITY).build();
+
     public static final QuestionDto.SubResponse SUB_RESPONSE= new QuestionDto.SubResponse();
     static {
-        ENTITY.setQuestionId(3L);
-        ENTITY.setTitle("question title");
-        ENTITY.setContent("question content");
-        ENTITY.setView(100L);
-        ENTITY.setVote(5L);
-        ENTITY.setMember(MemberStub.ENTITY);
-
         SUB_RESPONSE.setQuestionId(ENTITY.getQuestionId());
         SUB_RESPONSE.setTitle(ENTITY.getTitle());
         SUB_RESPONSE.setContent(ENTITY.getContent());
@@ -93,21 +99,14 @@ public class QuestionStub {
         SUB_RESPONSE.setAnswerCount(ENTITY.getAnswers().size());
     }
 
-    private static final long MOCK_QUESTION_ID = 5L;
-    private static final String MOCK_TITLE = "question_title";
-    private static final String MOCK_CONTENT = "question_content";
-    private static final long MOCK_VIEW = 100L;
-    private static final long MOCK_VOTE = 10L;
-
     public static Question getChangeableEntity() {
-        Question mockQuestion = new Question();
-        mockQuestion.setQuestionId(MOCK_QUESTION_ID);
-        mockQuestion.setTitle(MOCK_TITLE);
-        mockQuestion.setContent(MOCK_CONTENT);
-        mockQuestion.setView(MOCK_VIEW);
-        mockQuestion.setVote(MOCK_VOTE);
-
-        return mockQuestion;
+        return Question.builder()
+                .questionId(MOCK_QUESTION_ID)
+                .title(MOCK_TITLE)
+                .content(MOCK_CONTENT)
+                .view(MOCK_VIEW)
+                .vote(MOCK_VOTE)
+                .member(MemberStub.ENTITY).build();
     }
 
     public static QuestionDto.SubResponse getSubResponse() {

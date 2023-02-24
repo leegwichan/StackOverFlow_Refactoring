@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question findQuestion(long questionId) {
         Question question = findVerifiedQuestion(questionId);
-        question.setView(question.getView() +1);
+        question.increaseView();
         return questionRepository.save(question);
     }
 
@@ -52,19 +52,14 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question createQuestion(Question question) {
         Member findMember = memberService.findMember(question.getMember().getMemberId());
-        question.setMember(findMember);
+        question.setInitialMember(findMember);
         return questionRepository.save(question);
     }
 
     @Override
     public Question updateQuestion(Question updateQuestion) {
         Question findQuestion = findVerifiedQuestion(updateQuestion.getQuestionId());
-
-        Optional.ofNullable(updateQuestion.getTitle())
-                .ifPresent(title -> findQuestion.setTitle(title));
-        Optional.ofNullable(updateQuestion.getContent())
-                .ifPresent(content -> findQuestion.setContent(content));
-
+        findQuestion.update(updateQuestion);
         return questionRepository.save(findQuestion);
     }
 

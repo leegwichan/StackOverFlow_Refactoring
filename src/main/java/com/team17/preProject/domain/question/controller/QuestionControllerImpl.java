@@ -96,9 +96,9 @@ public class QuestionControllerImpl{
                                         @RequestBody @Valid QuestionDto.Patch requestBody,
                                         Authentication authentication) {
         securityService.checkQuestionWriter(authentication, questionId);
-
+        requestBody.setQuestionId(questionId);
         Question question = mapper.questionPatchDtoToQuestion(requestBody);
-        question.setQuestionId(questionId);
+
         Question patchQuestion = questionService.updateQuestion(question);
         QuestionDto.SubResponse response = mapper.questionToQuestionSubResponseDto(patchQuestion);
 
