@@ -5,17 +5,20 @@ import com.team17.preProject.domain.audit.Auditable;
 import com.team17.preProject.domain.follow.entity.FollowQuestion;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.vote.entity.VoteQuestion;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
-@Setter
 @Entity
 public class Question extends Auditable {
 
@@ -30,9 +33,11 @@ public class Question extends Auditable {
     private String content;
 
     @Column(nullable = false)
+    @Builder.Default
     private long view = 0;
 
     @Column(nullable = false)
+    @Builder.Default
     private long vote = 0;
 
     @ManyToOne
@@ -43,6 +48,7 @@ public class Question extends Auditable {
             fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE,
             orphanRemoval = true)
+    @Builder.Default
     private List<Answer> answers = new ArrayList<>();
 
     @OneToOne
@@ -61,5 +67,24 @@ public class Question extends Auditable {
             orphanRemoval = true)
     private List<VoteQuestion> voteQuestions;
 
+    public void setMember(Member member) {
+        this.member = member;
+    }
 
+    public void setBestAnswer(Answer answer) {
+        this.bestAnswer = answer;
+    }
+
+    public void setVote(long vote) {
+        this.vote = vote;
+    }
+
+    public void update(Question question) {
+        this.title = Optional.ofNullable(question.getTitle()).orElse(this.title);
+        this.content = Optional.ofNullable(question.getContent()).orElse(this.content);
+    }
+
+    public void increaseView() {
+        this.view++;
+    }
 }

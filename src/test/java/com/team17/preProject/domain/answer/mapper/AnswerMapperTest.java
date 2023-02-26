@@ -30,7 +30,7 @@ public class AnswerMapperTest {
     @Test
     void answerPostDtoToAnswer() {
         AnswerDto.Post dto = new AnswerDto.Post("answer_content", 5L, 3L);
-        Question question = new Question(); question.setQuestionId(5L);
+        Question question = Question.builder().questionId(5L).build();
         Member member = Member.builder().memberId(3L).build();
         Answer expected = new Answer();
         expected.setContent("answer_content");

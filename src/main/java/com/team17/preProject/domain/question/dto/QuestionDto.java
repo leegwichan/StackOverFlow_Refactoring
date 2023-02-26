@@ -71,6 +71,7 @@ public class QuestionDto {
     @Getter
     @Setter
     public static class Patch{
+        private long questionId;
 
         @Size(max = 225, message = "게시물의 제목은 최대 255자 입니다.")
         @NotBlank(message = "글의 title 은 공백이 아니어야 합니다.")

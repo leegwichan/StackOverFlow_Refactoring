@@ -27,10 +27,11 @@ public class QuestionMapperTest {
     void questionPostDtoToQuestionTest() {
         QuestionDto.Post dto = new QuestionDto.Post("title", "content", 5L);
         Member member = Member.builder().memberId(5L).build();
-        Question expected = new Question();
-        expected.setTitle("title");
-        expected.setContent("content");
-        expected.setMember(member);
+        Question expected = Question.builder()
+                .title("title")
+                .content("content")
+                .member(member)
+                .build();
 
         Question result = questionMapper.questionPostDtoToQuestion(dto);
 
@@ -39,10 +40,12 @@ public class QuestionMapperTest {
 
     @Test
     void questionPatchDtoToQuestionTest() {
-        QuestionDto.Patch dto = new QuestionDto.Patch("title", "content");
-        Question expected = new Question();
-        expected.setTitle("title");
-        expected.setContent("content");
+        QuestionDto.Patch dto = new QuestionDto.Patch(5L,"title", "content");
+        Question expected = Question.builder()
+                .questionId(5L)
+                .title("title")
+                .content("content")
+                .build();
 
         Question result = questionMapper.questionPatchDtoToQuestion(dto);
 
