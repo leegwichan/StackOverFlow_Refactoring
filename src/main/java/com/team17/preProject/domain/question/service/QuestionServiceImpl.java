@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -52,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question createQuestion(Question question) {
         Member findMember = memberService.findMember(question.getMember().getMemberId());
-        question.setInitialMember(findMember);
+        question.setMember(findMember);
         return questionRepository.save(question);
     }
 

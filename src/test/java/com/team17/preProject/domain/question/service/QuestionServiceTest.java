@@ -56,7 +56,7 @@ public class QuestionServiceTest {
     void createQuestionTest() {
         Question question = QuestionStub.getChangeableEntity();
         Member memberInfo = Member.builder().memberId(1L).build();
-        question.setInitialMember(memberInfo);
+        question.setMember(memberInfo);
         Member findMember = MemberStub.ENTITY;
         given(memberService.findMember(memberInfo.getMemberId())).willReturn(findMember);
         given(repository.save(any())).willReturn(question);

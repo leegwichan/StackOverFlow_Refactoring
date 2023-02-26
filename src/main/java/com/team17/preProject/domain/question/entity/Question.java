@@ -67,8 +67,8 @@ public class Question extends Auditable {
             orphanRemoval = true)
     private List<VoteQuestion> voteQuestions;
 
-    public void setInitialMember(Member member) {
-        this.member = Optional.of(this.member).orElse(member);
+    public void setMember(Member member) {
+        this.member = member;
     }
 
     public void setBestAnswer(Answer answer) {
