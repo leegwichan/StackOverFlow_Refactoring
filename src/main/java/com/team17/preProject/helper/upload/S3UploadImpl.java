@@ -13,11 +13,12 @@ import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
-public class S3UploadImpl implements S3Upload{
+public class S3UploadImpl implements S3Upload {
 
     private static final String FILE_EXTENSION_DELIMITER = ".";
     private static final String[] ALLOWED_FILE_EXTENSION = new String[]{".jpg", ".png"};
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
+    private static final String CONTENT_TYPE = "multipart/formed-data";
 
     @Value("${cloud.aws.s3.bucket}") private String bucket;
     @Value("${cloud.aws.s3.dir}") private String dir;
@@ -51,6 +52,7 @@ public class S3UploadImpl implements S3Upload{
     private ObjectMetadata makeObjectMetadata(String fileSize) {
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(Long.parseLong(fileSize));
+        objMeta.setContentType(CONTENT_TYPE);
         return objMeta;
     }
 }
