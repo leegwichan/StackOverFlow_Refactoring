@@ -90,7 +90,7 @@ public class MemberController {
                                      @RequestParam String fileSize) throws IOException {
 
         securityService.checkMemberEqual(authentication, memberId);
-        String url = s3Upload.upload(multipartFile.getInputStream(),
+        String url = s3Upload.uploadImage(multipartFile.getInputStream(),
                 multipartFile.getOriginalFilename(), fileSize);
 
         Member member = Member.builder()

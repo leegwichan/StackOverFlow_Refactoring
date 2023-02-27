@@ -25,7 +25,7 @@ public class S3UploadImpl implements S3Upload {
     private final AmazonS3Client s3Client;
     
     @Override
-    public String upload(InputStream inputStream, String originFileName, String fileSize) {
+    public String uploadImage(InputStream inputStream, String originFileName, String fileSize) {
         if(!isAllowedExtension(originFileName)){
             throw new BusinessLogicException(ExceptionCode.NOT_IMAGE_EXTENSION);
         }
