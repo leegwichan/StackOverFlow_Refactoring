@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 public class S3UploadImpl implements S3Upload {
 
     private static final String FILE_EXTENSION_DELIMITER = ".";
-    private static final String[] ALLOWED_IMAGE_EXTENSION = new String[]{".jpg", ".png"};
+    private static final String[] ALLOWED_IMAGE_EXTENSION = new String[]{".jpg", ".png", ".JPG", ".PNG"};
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
     private static final String CONTENT_TYPE = "multipart/formed-data";
 

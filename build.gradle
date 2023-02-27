@@ -47,6 +47,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'com.google.code.gson:gson'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
     testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.5.3.Final"
 	testCompileOnly 'org.projectlombok:lombok:1.18.24' // 테스트 의존성 추가
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.24' // 테스트 의존성 추가
