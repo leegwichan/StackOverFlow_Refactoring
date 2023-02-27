@@ -58,7 +58,7 @@ public class TestController {
     public ResponseEntity uploadFile(@RequestParam("images") MultipartFile multipartFile,
                                      @RequestParam String fileSize) throws IOException{
 
-        String url = s3Upload.upload(multipartFile.getInputStream(),
+        String url = s3Upload.uploadImage(multipartFile.getInputStream(),
                 multipartFile.getOriginalFilename(), fileSize);
         Response response = new Response(200, url);
 
