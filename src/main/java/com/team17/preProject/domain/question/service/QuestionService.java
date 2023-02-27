@@ -7,8 +7,8 @@ public interface QuestionService {
 
     public Question findQuestion(long questionId);
     public Page<Question> findQuestions(int page, int size);
-    public Page<Question> findQuestionsByKeyword(int page, int size, String keyword);
-    public Page<Question> findQuestionsByMemberID(int page, int size, long memberId);
+    public Page<Question> findQuestions(int page, int size, String keyword);
+    public Page<Question> findQuestions(int page, int size, long memberId);
     public Question createQuestion(Question question);
     public Question updateQuestion(Question updateQuestion);
     public Question updateQuestionDirectly(Question updateQuestion);

@@ -36,13 +36,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> findQuestionsByKeyword(int page, int size, String keyword) {
+    public Page<Question> findQuestions(int page, int size, String keyword) {
         return questionRepository.findByTitleContaining(keyword,
                 PageRequest.of(page, size, DESCENDING_QUESTION_ID));
     }
 
     @Override
-    public Page<Question> findQuestionsByMemberID(int page, int size, long memberId) {
+    public Page<Question> findQuestions(int page, int size, long memberId) {
         Member member = memberService.findMember(memberId);
         return questionRepository.findByMember(member,
                 PageRequest.of(page, size, DESCENDING_QUESTION_ID));

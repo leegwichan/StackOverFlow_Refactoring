@@ -57,7 +57,7 @@ public class QuestionControllerImpl{
                                                @RequestParam @Positive int page,
                                                @RequestParam @Positive @Max(500L) int size){
 
-        Page<Question> findQuestions = questionService.findQuestionsByKeyword(page-1, size, keyword);
+        Page<Question> findQuestions = questionService.findQuestions(page-1, size, keyword);
         List<QuestionDto.SubResponse> response = mapper.questionsToQuestionSubResponseDtos(findQuestions.getContent());
         return new ResponseEntity(
                 new MultiResponseDto<>(response, findQuestions), HttpStatus.OK);
@@ -68,7 +68,7 @@ public class QuestionControllerImpl{
                                                  @RequestParam @Positive int page,
                                                  @RequestParam @Positive @Max(500L) int size){
 
-        Page<Question> findQuestion = questionService.findQuestionsByMemberID(page-1, size, memberId);
+        Page<Question> findQuestion = questionService.findQuestions(page-1, size, memberId);
         List<QuestionDto.SubResponse> responses = mapper.questionsToQuestionSubResponseDtos(findQuestion.getContent());
         return new ResponseEntity(
                 new MultiResponseDto<>(responses, findQuestion), HttpStatus.OK
