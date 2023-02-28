@@ -42,8 +42,8 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> findQuestions(int page, int size, String keyword) {
-        return questionRepository.findByTitleContaining(keyword,
+    public Page<Question> findQuestions(int page, int size, String searchWord) {
+        return questionRepository.findByTitleContaining(searchWord,
                 PageRequest.of(page, size, DESCENDING_QUESTION_ID));
     }
 

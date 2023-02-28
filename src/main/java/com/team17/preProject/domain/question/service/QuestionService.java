@@ -8,7 +8,7 @@ public interface QuestionService {
     Question inquireQuestion(long questionId);
     Question findQuestion(long questionId);
     Page<Question> findQuestions(int page, int size);
-    Page<Question> findQuestions(int page, int size, String keyword);
+    Page<Question> findQuestions(int page, int size, String searchWord);
     Page<Question> findQuestions(int page, int size, long memberId);
     Question createQuestion(Question question);
     Question updateQuestion(Question question);
