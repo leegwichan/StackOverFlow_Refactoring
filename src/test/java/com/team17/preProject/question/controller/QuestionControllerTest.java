@@ -52,7 +52,7 @@ public class QuestionControllerTest implements QuestionControllerTestHelper{
     public void getQuestionTest() throws Exception{
         QuestionDto.Response response = QuestionStub.getSingleResponseBody();
 
-        given(questionService.findQuestion(anyLong())).willReturn(null);
+        given(questionService.inquireQuestion(anyLong())).willReturn(null);
         given(answerService.findAnswersByQuestion(anyLong()))
                 .willReturn(null);
         given(mapper.questionToQuestionResponseDto(any()))

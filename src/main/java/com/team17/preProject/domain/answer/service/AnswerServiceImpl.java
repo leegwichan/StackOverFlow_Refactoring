@@ -30,7 +30,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     public List<Answer> findAnswersByQuestion(long questionId) {
 
-        Question findQuestion = questionService.findVerifiedQuestion(questionId);
+        Question findQuestion = questionService.findQuestion(questionId);
         return answerRepository.findByQuestion(findQuestion);
     }
 
@@ -45,7 +45,7 @@ public class AnswerServiceImpl implements AnswerService{
     public Answer createAnswer(Answer answer) {
         Member findMember = memberService.findMember(answer.getMember().getMemberId());
         answer.setMember(findMember);
-        Question findQuestion = questionService.findVerifiedQuestion(answer.getQuestion().getQuestionId());
+        Question findQuestion = questionService.findQuestion(answer.getQuestion().getQuestionId());
         answer.setQuestion(findQuestion);
 
         if (findMember.getMemberId() == findQuestion.getMember().getMemberId()){
@@ -75,7 +75,7 @@ public class AnswerServiceImpl implements AnswerService{
         checkVerifiedBestAnswerByQuestion(findAnswer, question.getQuestionId());
 
         question.setBestAnswer(findAnswer);
-        questionService.updateQuestionDirectly(question);
+        questionService.updateQuestion(question);
         return findAnswer;
     }
 

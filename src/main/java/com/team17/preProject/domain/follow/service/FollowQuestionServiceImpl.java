@@ -36,7 +36,7 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
     @Override
     public FollowQuestion createFollowQuestion(long memberId, long questionId) {
         Member findMember = memberService.findMember(memberId);
-        Question findQuestion = questionService.findVerifiedQuestion(questionId);
+        Question findQuestion = questionService.findQuestion(questionId);
 
         findFollowQuestionExpectNull(findMember, findQuestion);
 
@@ -50,7 +50,7 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
     @Override
     public void deleteFollowQuestion(long memberId, long questionId) {
         Member findMember = memberService.findMember(memberId);
-        Question findQuestion = questionService.findVerifiedQuestion(questionId);
+        Question findQuestion = questionService.findQuestion(questionId);
 
         FollowQuestion followQuestion = findFollowQuestionExpectPresent(findMember, findQuestion);
         repository.delete(followQuestion);
