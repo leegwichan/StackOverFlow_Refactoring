@@ -5,14 +5,12 @@ import org.springframework.data.domain.Page;
 
 public interface QuestionService {
 
-    public Question findQuestion(long questionId);
-    public Page<Question> findQuestions(int page, int size);
-    public Page<Question> findQuestions(int page, int size, String keyword);
-    public Page<Question> findQuestions(int page, int size, long memberId);
-    public Question createQuestion(Question question);
-    public Question updateQuestion(Question updateQuestion);
-    public Question updateQuestionDirectly(Question updateQuestion);
-    public void deleteQuestion(long questionId);
-    public Question findVerifiedQuestion(long questionId);
-
+    Question inquireQuestion(long questionId);
+    Question findQuestion(long questionId);
+    Page<Question> findQuestions(int page, int size);
+    Page<Question> findQuestions(int page, int size, String keyword);
+    Page<Question> findQuestions(int page, int size, long memberId);
+    Question createQuestion(Question question);
+    Question updateQuestion(Question question);
+    void deleteQuestion(long questionId);
 }

@@ -36,7 +36,7 @@ public class QuestionServiceTest {
         given(repository.findById(questionId)).willReturn(Optional.of(questionStub));
         given(repository.save(any())).willReturn(questionStub);
 
-        Question result = questionService.findQuestion(questionId);
+        Question result = questionService.inquireQuestion(questionId);
 
         assertThat(result).usingRecursiveComparison().isEqualTo(questionStub);
         assertThat(result.getView()).isEqualTo(beforeView + 1);
@@ -48,7 +48,7 @@ public class QuestionServiceTest {
         given(repository.findById(questionId)).willReturn(Optional.empty());
 
         Exception result = assertThrows(BusinessLogicException.class,
-                () -> questionService.findQuestion(questionId));
+                () -> questionService.inquireQuestion(questionId));
         assertThat(result.getMessage()).isEqualTo("Question not found");
     }
 

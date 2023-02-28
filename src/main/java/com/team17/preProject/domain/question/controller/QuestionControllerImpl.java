@@ -35,7 +35,7 @@ public class QuestionControllerImpl{
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId) {
 
-        Question findQuestion = questionService.findQuestion(questionId);
+        Question findQuestion = questionService.inquireQuestion(questionId);
         QuestionDto.Response response = mapper.questionToQuestionResponseDto(findQuestion);
 
         return new ResponseEntity(

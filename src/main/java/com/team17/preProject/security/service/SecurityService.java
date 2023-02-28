@@ -25,7 +25,7 @@ public class SecurityService {
 
     public void checkQuestionWriter(Authentication authentication, long questionId){
 
-        Question findQuestion = questionService.findVerifiedQuestion(questionId);
+        Question findQuestion = questionService.findQuestion(questionId);
         long writerMemberId = findQuestion.getMember().getMemberId();
 
         checkMemberIdEqual(returnMemberId(authentication), writerMemberId);

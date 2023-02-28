@@ -24,10 +24,16 @@ public class QuestionServiceImpl implements QuestionService {
     private final MemberService memberService;
 
     @Override
-    public Question findQuestion(long questionId) {
-        Question question = findVerifiedQuestion(questionId);
+    public Question inquireQuestion(long questionId) {
+        Question question = findQuestion(questionId);
         question.increaseView();
         return questionRepository.save(question);
+    }
+
+    @Override
+    public Question findQuestion(long questionId){
+        return questionRepository.findById(questionId).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 
     @Override
@@ -56,25 +62,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question updateQuestion(Question updateQuestion) {
-        Question findQuestion = findVerifiedQuestion(updateQuestion.getQuestionId());
-        findQuestion.update(updateQuestion);
+    public Question updateQuestion(Question question) {
+        Question findQuestion = findQuestion(question.getQuestionId());
+        findQuestion.update(question);
         return questionRepository.save(findQuestion);
     }
 
     @Override
-    public Question updateQuestionDirectly(Question updateQuestion) {
-        return questionRepository.save(updateQuestion);
-    }
-
-    @Override
     public void deleteQuestion(long questionId) {
-        Question findQuestion = findVerifiedQuestion(questionId);
+        Question findQuestion = findQuestion(questionId);
         questionRepository.delete(findQuestion);
-    }
-
-    public Question findVerifiedQuestion(long questionId){
-        return questionRepository.findById(questionId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
     }
 }

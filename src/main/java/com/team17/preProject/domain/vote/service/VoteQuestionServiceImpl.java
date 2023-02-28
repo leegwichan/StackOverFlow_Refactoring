@@ -27,7 +27,7 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
     @Override
     public VoteQuestion voteGood(long memberId, long questionId) {
         Member member = memberService.findMember(memberId);
-        Question question = questionService.findVerifiedQuestion(questionId);
+        Question question = questionService.findQuestion(questionId);
         VoteQuestion voteQuestion = repository.findByMemberAndQuestion(member,question);
 
         if (question.getMember().getMemberId() == member.getMemberId()){
@@ -48,7 +48,7 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
     @Override
     public VoteQuestion voteBad(long memberId, long questionId) {
         Member member = memberService.findMember(memberId);
-        Question question = questionService.findVerifiedQuestion(questionId);
+        Question question = questionService.findQuestion(questionId);
         VoteQuestion voteQuestion = repository.findByMemberAndQuestion(member,question);
 
         if (question.getMember().getMemberId() == member.getMemberId()){
