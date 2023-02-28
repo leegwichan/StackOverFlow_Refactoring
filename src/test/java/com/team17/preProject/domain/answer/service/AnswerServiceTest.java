@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import java.util.Optional;
 
 @SpringBootTest(classes = {AnswerServiceImpl.class})
 public class AnswerServiceTest {
@@ -79,5 +80,31 @@ public class AnswerServiceTest {
                 () -> answerService.createAnswer(answer));
 
         assertThat(result.getMessage()).isEqualTo("자신의 질문에 답변을 달 수 없습니다.");
+    }
+
+    @Test
+    void updateAnswerTest() {
+        Answer findAnswer = Answer.builder()
+                .answerId(5L).content("content").build();
+        Answer updateAnswer = Answer.builder()
+                .answerId(5L).content("new content").build();
+        given(answerRepository.findById(5L)).willReturn(Optional.of(findAnswer));
+        given(answerRepository.save(findAnswer)).willReturn(findAnswer);
+
+        Answer result = answerService.updateAnswer(updateAnswer);
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(updateAnswer);
+    }
+
+    @Test
+    void updateAnswerTest_whenAnswerNotExist() {
+        Answer updateAnswer = Answer.builder()
+                .answerId(5L).content("new content").build();
+        given(answerRepository.findById(5L)).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> answerService.updateAnswer(updateAnswer));
+
+        assertThat(result.getMessage()).isEqualTo("Answer not found");
     }
 }
