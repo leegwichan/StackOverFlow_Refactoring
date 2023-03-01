@@ -58,6 +58,8 @@ public class AnswerDto {
     @Getter
     @Setter
     public static class Patch{
+        private long answerId;
+
         @Size(max = 10000, message = "게시물의 내용은 최대 10000자 입니다.")
         @NotBlank(message = "글의 content 는 공백이 아니어야 합니다.")
         private String content;

@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.List;
 
 @Transactional
@@ -50,7 +49,6 @@ public class AnswerServiceImpl implements AnswerService {
         if (findMember.getMemberId() == findQuestion.getMember().getMemberId()){
             throw new BusinessLogicException(ExceptionCode.SAME_QUESTION_ANSWER_MEMBER);
         }
-
         return answerRepository.save(answer);
     }
 

@@ -75,7 +75,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
         voteAnswer.setAnswer(answer);
         voteAnswer.setVote(vote);
 
-        answer.setVote(answer.getVote() + vote);
+        answer.addVote(vote);
         answerRepository.save(answer);
 
         return repository.save(voteAnswer);

@@ -32,10 +32,8 @@ public class AnswerMapperTest {
         AnswerDto.Post dto = new AnswerDto.Post("answer_content", 5L, 3L);
         Question question = Question.builder().questionId(5L).build();
         Member member = Member.builder().memberId(3L).build();
-        Answer expected = new Answer();
-        expected.setContent("answer_content");
-        expected.setQuestion(question);
-        expected.setMember(member);
+        Answer expected = Answer.builder().content("answer_content")
+                        .question(question).member(member).build();
 
         Answer result = answerMapper.answerPostDtoToAnswer(dto);
 
@@ -44,9 +42,8 @@ public class AnswerMapperTest {
 
     @Test
     void answerPatchDtoToAnswer() {
-        AnswerDto.Patch dto = new AnswerDto.Patch("answer_content");
-        Answer expected = new Answer();
-        expected.setContent("answer_content");
+        AnswerDto.Patch dto = new AnswerDto.Patch(5L,"answer_content");
+        Answer expected = Answer.builder().answerId(5L).content("answer_content").build();
 
         Answer result = answerMapper.answerPatchDtoToAnswer(dto);
 

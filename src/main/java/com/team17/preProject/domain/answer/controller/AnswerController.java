@@ -79,8 +79,8 @@ public class AnswerController {
                                       Authentication authentication){
         securityService.checkAnswerWriter(authentication, answerId);
 
+        requestBody.setAnswerId(answerId);
         Answer answer = mapper.answerPatchDtoToAnswer(requestBody);
-        answer.setAnswerId(answerId);
         Answer patchAnswer = answerService.updateAnswer(answer);
         AnswerDto.Response response = mapper.answerToAnswerResponseDto(patchAnswer);
 

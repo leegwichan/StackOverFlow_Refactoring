@@ -48,20 +48,19 @@ public class AnswerStub {
 
     public static final Answer ENTITY;
     static {
-        ENTITY = new Answer();
-        ENTITY.setAnswerId(10L);
-        ENTITY.setContent("content_answer");
-        ENTITY.setVote(45L);
-        ENTITY.setMember(MemberStub.ENTITY);
-        ENTITY.setQuestion(QuestionStub.ENTITY);
+        ENTITY = Answer.builder()
+                .answerId(10L)
+                .content("content_answer")
+                .vote(45L)
+                .member(MemberStub.ENTITY)
+                .question(QuestionStub.ENTITY).build();
     }
 
     public static final Answer getEntity() {
-        Answer mockEntity = new Answer();
-        mockEntity.setAnswerId(10L);
-        mockEntity.setContent("content_answer");
-        mockEntity.setVote(45L);
-        return mockEntity;
+        return Answer.builder()
+                .answerId(10L)
+                .content("content_answer")
+                .vote(45L).build();
     }
 
     public static final AnswerDto.Response getResponse() {
