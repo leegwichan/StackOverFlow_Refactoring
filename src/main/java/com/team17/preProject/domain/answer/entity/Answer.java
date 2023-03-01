@@ -5,6 +5,8 @@ import com.team17.preProject.domain.follow.entity.FollowAnswer;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.question.entity.Question;
 import com.team17.preProject.domain.vote.entity.VoteAnswer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Answer extends Auditable {
 
     @Id
@@ -26,6 +30,7 @@ public class Answer extends Auditable {
     private String content;
 
     @Column(nullable = false)
+    @Builder.Default
     private long vote = 0;
 
     @ManyToOne
