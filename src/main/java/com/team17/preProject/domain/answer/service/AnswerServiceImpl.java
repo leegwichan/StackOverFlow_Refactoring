@@ -82,10 +82,8 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     public Answer findVerifiedAnswer(long answerId){
-        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
-        Answer findAnswer = optionalAnswer.orElseThrow(() ->
+        return answerRepository.findById(answerId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-        return findAnswer;
     }
 
     private void checkVerifiedBestAnswerByQuestion(Answer answer, long questionId){
