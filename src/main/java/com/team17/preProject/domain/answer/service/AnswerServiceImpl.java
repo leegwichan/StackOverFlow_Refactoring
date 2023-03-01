@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class AnswerServiceImpl implements AnswerService{
+public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
@@ -29,7 +29,6 @@ public class AnswerServiceImpl implements AnswerService{
 
     @Override
     public List<Answer> findAnswersByQuestion(long questionId) {
-
         Question findQuestion = questionService.findQuestion(questionId);
         return answerRepository.findByQuestion(findQuestion);
     }
@@ -58,10 +57,7 @@ public class AnswerServiceImpl implements AnswerService{
     @Override
     public Answer updateAnswer(Answer answer) {
         Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
-
-        Optional.ofNullable(answer.getContent())
-                .ifPresent(content -> findAnswer.setContent(content));
-
+        findAnswer.update(answer);
         return answerRepository.save(findAnswer);
     }
 

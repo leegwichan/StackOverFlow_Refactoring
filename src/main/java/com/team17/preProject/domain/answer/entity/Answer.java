@@ -13,6 +13,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Optional;
 
 @NoArgsConstructor
 @Getter
@@ -51,4 +52,8 @@ public class Answer extends Auditable {
             fetch = FetchType.LAZY,
             cascade = CascadeType.REMOVE)
     private List<VoteAnswer> voteAnswers;
+
+    public void update(Answer to) {
+        this.content = Optional.ofNullable(to.content).orElse(this.content);
+    }
 }
