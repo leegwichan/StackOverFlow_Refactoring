@@ -1,5 +1,6 @@
 package com.team17.preProject.domain.question.controller;
 
+import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.question.entity.Question;
 import com.team17.preProject.domain.question.mapper.QuestionMapper;
 import com.team17.preProject.domain.question.service.QuestionService;
@@ -101,6 +102,19 @@ public class QuestionControllerImpl{
 
         Question patchQuestion = questionService.updateQuestion(question);
         QuestionDto.SubResponse response = mapper.questionToQuestionSubResponseDto(patchQuestion);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto(response), HttpStatus.OK);
+    }
+
+    @Secured("ROLE_USER")
+    @PatchMapping("{question-id}/pick/{answer-id}")
+    public ResponseEntity checkBestAnswer(@PathVariable("question-id") @Positive long questionId,
+                                          @PathVariable("answer-id") @Positive long answerId,
+                                          Authentication authentication){
+        securityService.checkQuestionWriterByAnswerId(authentication, answerId);
+        Question question = questionService.pickBestAnswer(questionId, answerId);
+        QuestionDto.SubResponse response = mapper.questionToQuestionSubResponseDto(question);
 
         return new ResponseEntity<>(
                 new SingleResponseDto(response), HttpStatus.OK);

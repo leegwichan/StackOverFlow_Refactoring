@@ -9,7 +9,6 @@ public interface AnswerService {
     public Page<Answer> findAnswersByMemberId(int page, int size, long memberId);
     public Answer createAnswer(Answer answer);
     public Answer updateAnswer(Answer answer);
-    public Answer checkBestAnswer(long answerId);
     public void deleteAnswer(long answerId);
     Answer findVerifiedAnswer(long answerId);
 }

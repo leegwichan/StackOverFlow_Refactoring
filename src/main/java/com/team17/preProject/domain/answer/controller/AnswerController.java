@@ -90,19 +90,6 @@ public class AnswerController {
     }
 
     @Secured("ROLE_USER")
-    @PatchMapping("/pick/{answer-id}")
-    public ResponseEntity checkBestAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                          Authentication authentication){
-        securityService.checkQuestionWriterByAnswerId(authentication, answerId);
-
-        Answer patchQuestion = answerService.checkBestAnswer(answerId);
-        QuestionDto.SubResponse response = questionMapper.questionToQuestionSubResponseDto(patchQuestion.getQuestion());
-
-        return new ResponseEntity(
-                new SingleResponseDto<>(response), HttpStatus.OK);
-    }
-
-    @Secured("ROLE_USER")
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(@PathVariable("answer-id") @Positive long answerId,
                                        Authentication authentication){

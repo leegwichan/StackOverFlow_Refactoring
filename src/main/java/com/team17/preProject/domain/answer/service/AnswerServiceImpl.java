@@ -60,20 +60,6 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public Answer checkBestAnswer(long answerId) {
-        Answer findAnswer = findVerifiedAnswer(answerId);
-        Question question = findAnswer.getQuestion();
-        if (question == null) throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
-
-        checkAlreadyExistBestAnswer(findAnswer.getQuestion());
-        checkVerifiedBestAnswerByQuestion(findAnswer, question.getQuestionId());
-
-        question.setBestAnswer(findAnswer);
-        questionService.updateQuestion(question);
-        return findAnswer;
-    }
-
-    @Override
     public void deleteAnswer(long answerId) {
         Answer findAnswer = findVerifiedAnswer(answerId);
         answerRepository.delete(findAnswer);
@@ -82,17 +68,5 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findVerifiedAnswer(long answerId){
         return answerRepository.findById(answerId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-    }
-
-    private void checkVerifiedBestAnswerByQuestion(Answer answer, long questionId){
-        if (answer.getQuestion().getQuestionId() != questionId){
-            throw new BusinessLogicException(ExceptionCode.NOT_VERIFIED_ANSWER_OF_QUESTION);
-        }
-    }
-
-    private void checkAlreadyExistBestAnswer(Question question){
-        if (question.getBestAnswer() != null){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_EXIST_BEST_ANSWER);
-        }
     }
 }

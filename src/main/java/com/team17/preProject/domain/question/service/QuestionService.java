@@ -12,5 +12,6 @@ public interface QuestionService {
     Page<Question> findQuestions(int page, int size, long memberId);
     Question createQuestion(Question question);
     Question updateQuestion(Question question);
+    Question pickBestAnswer(long questionId, long answerId);
     void deleteQuestion(long questionId);
 }
