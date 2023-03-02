@@ -27,6 +27,11 @@ public class AnswerServiceImpl implements AnswerService {
     private final MemberService memberService;
 
     @Override
+    public Answer findAnswer(long answerId) {
+        return findVerifiedAnswer(answerId);
+    }
+
+    @Override
     public List<Answer> findAnswersByQuestion(long questionId) {
         Question findQuestion = questionService.findQuestion(questionId);
         return answerRepository.findByQuestion(findQuestion);
@@ -54,18 +59,18 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer updateAnswer(Answer answer) {
-        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
+        Answer findAnswer = this.findVerifiedAnswer(answer.getAnswerId());
         findAnswer.update(answer);
         return answerRepository.save(findAnswer);
     }
 
     @Override
     public void deleteAnswer(long answerId) {
-        Answer findAnswer = findVerifiedAnswer(answerId);
+        Answer findAnswer = this.findVerifiedAnswer(answerId);
         answerRepository.delete(findAnswer);
     }
 
-    public Answer findVerifiedAnswer(long answerId){
+    private Answer findVerifiedAnswer(long answerId){
         return answerRepository.findById(answerId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
     }

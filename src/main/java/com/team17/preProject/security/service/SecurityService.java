@@ -32,14 +32,14 @@ public class SecurityService {
     }
 
     public void checkAnswerWriter(Authentication authentication, long answerId){
-        Answer findAnswer = answerService.findVerifiedAnswer(answerId);
+        Answer findAnswer = answerService.findAnswer(answerId);
         long writerMemberId = findAnswer.getMember().getMemberId();
 
         checkMemberIdEqual(returnMemberId(authentication), writerMemberId);
     }
 
     public void checkQuestionWriterByAnswerId(Authentication authentication, long answerId){
-        Answer findAnswer = answerService.findVerifiedAnswer(answerId);
+        Answer findAnswer = answerService.findAnswer(answerId);
         long questionWriterMemberId = findAnswer.getQuestion().getMember().getMemberId();
 
         checkMemberIdEqual(returnMemberId(authentication), questionWriterMemberId);

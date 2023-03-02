@@ -5,10 +5,10 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface AnswerService {
-    public List<Answer> findAnswersByQuestion(long questionId);
-    public Page<Answer> findAnswersByMemberId(int page, int size, long memberId);
-    public Answer createAnswer(Answer answer);
-    public Answer updateAnswer(Answer answer);
-    public void deleteAnswer(long answerId);
-    Answer findVerifiedAnswer(long answerId);
+    Answer findAnswer(long answerId);
+    List<Answer> findAnswersByQuestion(long questionId);
+    Page<Answer> findAnswersByMemberId(int page, int size, long memberId);
+    Answer createAnswer(Answer answer);
+    Answer updateAnswer(Answer answer);
+    void deleteAnswer(long answerId);
 }

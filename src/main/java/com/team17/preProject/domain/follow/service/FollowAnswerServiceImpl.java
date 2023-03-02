@@ -37,7 +37,7 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
     @Override
     public FollowAnswer createFollowAnswer(long memberId, long answerId) {
         Member findMember = memberService.findMember(memberId);
-        Answer findAnswer = answerService.findVerifiedAnswer(answerId);
+        Answer findAnswer = answerService.findAnswer(answerId);
 
         findFollowAnswerExpectNull(findMember, findAnswer);
 
@@ -51,7 +51,7 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
     @Override
     public void deleteFollowAnswer(long memberId, long answerId) {
         Member findMember = memberService.findMember(memberId);
-        Answer findAnswer = answerService.findVerifiedAnswer(answerId);
+        Answer findAnswer = answerService.findAnswer(answerId);
         FollowAnswer followAnswer = findFollowExceptionExceptPresent(findMember, findAnswer);
         repository.delete(followAnswer);
     }
