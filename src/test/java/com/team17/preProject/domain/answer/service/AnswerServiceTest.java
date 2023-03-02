@@ -32,6 +32,26 @@ public class AnswerServiceTest {
     @MockBean private MemberService memberService;
 
     @Test
+    void findAnswerTest() {
+        Answer answer = AnswerStub.getEntity();
+        given(answerRepository.findById(answer.getAnswerId())).willReturn(Optional.of(answer));
+
+        Answer result = answerService.findAnswer(answer.getAnswerId());
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(answer);
+    }
+
+    @Test
+    void findAnswerTest_whenAnswerNotExist() {
+        given(answerRepository.findById(5L)).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> answerService.findAnswer(5L));
+
+        assertThat(result.getMessage()).isEqualTo("Answer not found");
+    }
+
+    @Test
     void createAnswerTest() {
         Answer answer = Answer.builder()
                 .content("content")

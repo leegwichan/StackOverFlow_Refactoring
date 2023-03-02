@@ -1,5 +1,6 @@
 package com.team17.preProject.domain.question.service;
 
+import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.service.MemberService;
 import com.team17.preProject.domain.question.entity.Question;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -25,15 +27,14 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question inquireQuestion(long questionId) {
-        Question question = findQuestion(questionId);
+        Question question = findVerifiedQuestion(questionId);
         question.increaseView();
         return questionRepository.save(question);
     }
 
     @Override
-    public Question findQuestion(long questionId){
-        return questionRepository.findById(questionId).orElseThrow(
-                () -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    public Question findQuestion(long questionId) {
+        return findVerifiedQuestion(questionId);
     }
 
     @Override
@@ -63,14 +64,40 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question updateQuestion(Question question) {
-        Question findQuestion = findQuestion(question.getQuestionId());
+        Question findQuestion = findVerifiedQuestion(question.getQuestionId());
         findQuestion.update(question);
         return questionRepository.save(findQuestion);
     }
 
     @Override
+    public Question pickBestAnswer(long questionId, long answerId) {
+        Question findQuestion = findVerifiedQuestion(questionId);
+
+        Optional.ofNullable(findQuestion.getBestAnswer()).ifPresent(
+                answer -> {throw new BusinessLogicException(ExceptionCode.ALREADY_EXIST_BEST_ANSWER);});
+        Answer answer = findVerifiedAnswerInQuestion(findQuestion, answerId);
+
+        findQuestion.setBestAnswer(answer);
+        return questionRepository.save(findQuestion);
+    }
+
+    @Override
     public void deleteQuestion(long questionId) {
-        Question findQuestion = findQuestion(questionId);
+        Question findQuestion = findVerifiedQuestion(questionId);
         questionRepository.delete(findQuestion);
+    }
+
+    private Question findVerifiedQuestion(long questionId){
+        return questionRepository.findById(questionId).orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
+
+    private Answer findVerifiedAnswerInQuestion(Question question, long answerId) {
+        for (Answer answer : question.getAnswers()) {
+            if (answer.getAnswerId() == answerId) {
+                return answer;
+            }
+        }
+        throw new BusinessLogicException(ExceptionCode.NOT_VERIFIED_ANSWER_OF_QUESTION);
     }
 }

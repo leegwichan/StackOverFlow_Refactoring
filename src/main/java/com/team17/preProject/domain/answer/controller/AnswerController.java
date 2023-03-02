@@ -79,27 +79,14 @@ public class AnswerController {
                                       Authentication authentication){
         securityService.checkAnswerWriter(authentication, answerId);
 
+        requestBody.setAnswerId(answerId);
         Answer answer = mapper.answerPatchDtoToAnswer(requestBody);
-        answer.setAnswerId(answerId);
         Answer patchAnswer = answerService.updateAnswer(answer);
         AnswerDto.Response response = mapper.answerToAnswerResponseDto(patchAnswer);
 
         return new ResponseEntity(
                 new SingleResponseDto<>(response), HttpStatus.OK
         );
-    }
-
-    @Secured("ROLE_USER")
-    @PatchMapping("/pick/{answer-id}")
-    public ResponseEntity checkBestAnswer(@PathVariable("answer-id") @Positive long answerId,
-                                          Authentication authentication){
-        securityService.checkQuestionWriterByAnswerId(authentication, answerId);
-
-        Answer patchQuestion = answerService.checkBestAnswer(answerId);
-        QuestionDto.SubResponse response = questionMapper.questionToQuestionSubResponseDto(patchQuestion.getQuestion());
-
-        return new ResponseEntity(
-                new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
     @Secured("ROLE_USER")

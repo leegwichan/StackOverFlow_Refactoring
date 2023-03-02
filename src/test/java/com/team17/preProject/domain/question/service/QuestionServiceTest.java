@@ -6,17 +6,20 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.member.service.MemberService;
 import com.team17.preProject.domain.question.entity.Question;
 import com.team17.preProject.domain.question.repository.QuestionRepository;
 import com.team17.preProject.exception.businessLogic.BusinessLogicException;
+import com.team17.preProject.helper.stub.AnswerStub;
 import com.team17.preProject.helper.stub.MemberStub;
 import com.team17.preProject.helper.stub.QuestionStub;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest(classes = {QuestionServiceImpl.class})
@@ -98,6 +101,55 @@ public class QuestionServiceTest {
                 () -> questionService.updateQuestion(questionStub));
         assertThat(result.getMessage()).isEqualTo("Question not found");
     }
+
+    @Test
+    void pickBestAnswerTest() {
+        Answer answer = AnswerStub.getEntity();
+        Question found = Question.builder().questionId(5L).answers(List.of(answer)).build();
+        given(repository.findById(5L)).willReturn(Optional.of(found));
+        given(repository.save(found)).willReturn(found);
+        Question expected = Question.builder().questionId(5L).answers(List.of(answer))
+                .bestAnswer(answer).build();
+
+        Question result = questionService.pickBestAnswer(found.getQuestionId(), answer.getAnswerId());
+
+        assertThat(result).usingRecursiveComparison().isEqualTo(expected);
+    }
+
+    @Test
+    void pickBestAnswerTest_whenQuestionNotExist() {
+        given(repository.findById(5L)).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> questionService.pickBestAnswer(5L, 5L));
+
+        assertThat(result.getMessage()).isEqualTo("Question not found");
+    }
+
+    @Test
+    void pickBestAnswerTest_whenBestAnswerNotFound() {
+        Answer answer = AnswerStub.getEntity();
+        Question found = Question.builder().questionId(5L).answers(List.of(answer, answer)).build();
+        given(repository.findById(5L)).willReturn(Optional.of(found));
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> questionService.pickBestAnswer(5L, 200L));
+
+        assertThat(result.getMessage()).isEqualTo("해당 질문의 답변이 아닙니다.");
+    }
+
+    @Test
+    void pickBestAnswerTest_whenExistBestAnswer() {
+        Answer answer = AnswerStub.getEntity();
+        Question found = Question.builder().questionId(5L).bestAnswer(answer).build();
+        given(repository.findById(5L)).willReturn(Optional.of(found));
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> questionService.pickBestAnswer(found.getQuestionId(), answer.getAnswerId()));
+
+        assertThat(result.getMessage()).isEqualTo("Already exist best answer");
+    }
+
 
     @Test
     void deleteQuestionTest() {

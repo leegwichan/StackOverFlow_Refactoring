@@ -15,21 +15,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.List;
 
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class AnswerServiceImpl implements AnswerService{
+public class AnswerServiceImpl implements AnswerService {
 
     private final AnswerRepository answerRepository;
     private final QuestionService questionService;
     private final MemberService memberService;
 
     @Override
-    public List<Answer> findAnswersByQuestion(long questionId) {
+    public Answer findAnswer(long answerId) {
+        return findVerifiedAnswer(answerId);
+    }
 
+    @Override
+    public List<Answer> findAnswersByQuestion(long questionId) {
         Question findQuestion = questionService.findQuestion(questionId);
         return answerRepository.findByQuestion(findQuestion);
     }
@@ -51,56 +54,24 @@ public class AnswerServiceImpl implements AnswerService{
         if (findMember.getMemberId() == findQuestion.getMember().getMemberId()){
             throw new BusinessLogicException(ExceptionCode.SAME_QUESTION_ANSWER_MEMBER);
         }
-
         return answerRepository.save(answer);
     }
 
     @Override
     public Answer updateAnswer(Answer answer) {
-        Answer findAnswer = findVerifiedAnswer(answer.getAnswerId());
-
-        Optional.ofNullable(answer.getContent())
-                .ifPresent(content -> findAnswer.setContent(content));
-
+        Answer findAnswer = this.findVerifiedAnswer(answer.getAnswerId());
+        findAnswer.update(answer);
         return answerRepository.save(findAnswer);
     }
 
     @Override
-    public Answer checkBestAnswer(long answerId) {
-        Answer findAnswer = findVerifiedAnswer(answerId);
-        Question question = findAnswer.getQuestion();
-        if (question == null) throw new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND);
-
-        checkAlreadyExistBestAnswer(findAnswer.getQuestion());
-        checkVerifiedBestAnswerByQuestion(findAnswer, question.getQuestionId());
-
-        question.setBestAnswer(findAnswer);
-        questionService.updateQuestion(question);
-        return findAnswer;
-    }
-
-    @Override
     public void deleteAnswer(long answerId) {
-        Answer findAnswer = findVerifiedAnswer(answerId);
+        Answer findAnswer = this.findVerifiedAnswer(answerId);
         answerRepository.delete(findAnswer);
     }
 
-    public Answer findVerifiedAnswer(long answerId){
-        Optional<Answer> optionalAnswer = answerRepository.findById(answerId);
-        Answer findAnswer = optionalAnswer.orElseThrow(() ->
+    private Answer findVerifiedAnswer(long answerId){
+        return answerRepository.findById(answerId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-        return findAnswer;
-    }
-
-    private void checkVerifiedBestAnswerByQuestion(Answer answer, long questionId){
-        if (answer.getQuestion().getQuestionId() != questionId){
-            throw new BusinessLogicException(ExceptionCode.NOT_VERIFIED_ANSWER_OF_QUESTION);
-        }
-    }
-
-    private void checkAlreadyExistBestAnswer(Question question){
-        if (question.getBestAnswer() != null){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_EXIST_BEST_ANSWER);
-        }
     }
 }
