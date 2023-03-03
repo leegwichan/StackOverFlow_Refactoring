@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -64,11 +63,8 @@ public class MemberServiceImpl implements MemberService{
     }
 
     private Member findVerifiedMember(long memberId){
-        Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() ->
+        return memberRepository.findById(memberId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
-        return findMember;
     }
 
     private void findMemberByEmailExpectNull(String email){
