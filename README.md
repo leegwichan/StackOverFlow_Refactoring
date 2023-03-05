@@ -16,7 +16,7 @@
 - 리팩토링시 떠오르는 개선사항들을 기록하고 개선해본다.
 - 시간이 된다면, 요구사항 명세서 Advenced에 있는 내용을 구현해본다.
 
-### Sprint 1 (23.02.05 ~ 23.02.13)
+### Sprint 1 (23.02.05 ~ 02.13) : Mapstruct Refactoring
 
 - 다수의 회사들에서 사용하는 Jira를 사용해보고 익히기
 - Mapstruct 관련 interface Unit Test를 작성하기
@@ -24,15 +24,31 @@
   - 레퍼런스를 참고하여 최대한 라이브러리의 내용을 이용할 것
 - Git Convention 을 정하고 이를 지키서 commit 실시
 
-### Sprint 2  (23.02.17 ~ )
+### Sprint 2 (23.02.17 ~ 03.05) : Service Layer Refactoring 1
+
 - Code Convention 완성, Git branch 관리 방법 작성
-- Service 관련 code의 Unit Test 작성
-- Service 관련 code를 Code Convention에 맞추어 리팩토링 실시
+- Member, Question, Answer domain의 Service Layer Refactoring
+  - Service 관련 code의 Unit Test 작성
+  - Service 관련 code를 Code Convention에 맞추어 리팩토링 실시
 - helper package에 있는 code들 Unit Test 작성 & 리팩토링 실시
   - EmailSender, PasswordCreator, S3ImageUpload
 
+### Sprint 3 (23.03.13 ~ 03.26) : Service Layer Refactoring 2
+
+- Follow, Vote 관련 Service Layer Refactoring
+  - Service 관련 code의 Unit Test 작성
+  - Service 관련 code를 Code Convention에 맞추어 리팩토링 실시
+- Service Layer 분리
+  - 한가지 Service에 많은 책임이 할당되어 있어 분리 실시
+  - interface 제거 예정 (다른 방식으로 구현될 일이 없다고 생각함)
+- helper Refactoring
+  - upload : Unit test가 가능하도록 구조 변경
+  - password : interface 구현 (다른 방법으로도 구현 가능하다고 생각)
+  - email : 필요없는 파일 제거, TemporaryEmailSender interface 구현, Unit test가 가능하도록 구조 변경
+
 ### Code Convention
-- 기본적인 Convention
+- Basic Code Convention
+  - 기본적으로 [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) 를 따름
   - Wiki에 추가 예정
 
 - Refactoring Convention
@@ -81,7 +97,6 @@
     - type : feat, refactor, chore 등등
     - scope : 작업 대상 작성 (형식 : snake_case)
     - ex) SCR-17/refactor/member_service
-
 
 ### 기타
 - README는 아직 미완성이므로 중간중간 업데이트 될 수 있습니다.
