@@ -1,0 +1,41 @@
+package com.team17.preProject.domain.follow.service;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+
+import com.team17.preProject.domain.answer.service.AnswerService;
+import com.team17.preProject.domain.follow.entity.FollowAnswer;
+import com.team17.preProject.domain.follow.repository.FollowAnswerRepository;
+import com.team17.preProject.domain.member.service.MemberService;
+import com.team17.preProject.helper.stub.FollowAnswerStub;
+import com.team17.preProject.helper.stub.MemberStub;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import java.util.List;
+
+@SpringBootTest(classes = {FollowAnswerServiceImpl.class})
+class FollowAnswerServiceTest {
+
+    @Autowired private FollowAnswerService followAnswerService;
+    @MockBean private FollowAnswerRepository repository;
+    @MockBean private MemberService memberService;
+    @MockBean private AnswerService answerService;
+
+    @Test
+    void findFollowAnswerTest() {
+        given(memberService.findMember(anyLong())).willReturn(MemberStub.getChangeableEntity());
+        List<FollowAnswer> content = List.of(FollowAnswerStub.getEntity(3L), FollowAnswerStub.getEntity(4L));
+        given(repository.findByMember(any(), any())).willReturn(new PageImpl<>(content));
+
+        Page<FollowAnswer> result = followAnswerService.findFollowAnswerByMember(1,2,3L);
+
+        assertThat(result.getContent()).usingRecursiveComparison().isEqualTo(content);
+    }
+
+}
