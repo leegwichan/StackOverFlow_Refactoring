@@ -1,6 +1,7 @@
 package com.team17.preProject.domain.follow.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -67,4 +68,25 @@ class FollowAnswerServiceTest {
         assertThat(result.getMessage()).isEqualTo("Already follow post");
     }
 
+    @Test
+    void deleteFollowAnswerTest() {
+        given(memberService.findMember(anyLong())).willReturn(MemberStub.getChangeableEntity());
+        given(answerService.findAnswer(anyLong())).willReturn(AnswerStub.getEntity());
+        given(repository.findByMemberAndAnswer(any(), any()))
+                .willReturn(Optional.of(FollowAnswerStub.getEntity(3L)));
+
+        assertDoesNotThrow(() -> followAnswerService.deleteFollowAnswer(3L, 3L));
+    }
+
+    @Test
+    void deleteFollowAnswerTest_whenNotExist() {
+        given(memberService.findMember(anyLong())).willReturn(MemberStub.getChangeableEntity());
+        given(answerService.findAnswer(anyLong())).willReturn(AnswerStub.getEntity());
+        given(repository.findByMemberAndAnswer(any(), any())).willReturn(Optional.empty());
+
+        Exception result = assertThrows(BusinessLogicException.class,
+                () -> followAnswerService.deleteFollowAnswer(3L, 3L));
+
+        assertThat(result.getMessage()).isEqualTo("Not follow post");
+    }
 }
