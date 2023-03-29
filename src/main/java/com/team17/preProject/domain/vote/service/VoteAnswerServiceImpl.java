@@ -18,6 +18,9 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class VoteAnswerServiceImpl implements VoteAnswerService{
 
+    private static final int GOOD = 1;
+    private static final int BAD = -1;
+
     private final VoteAnswerRepository repository;
     private final MemberService memberService;
     private final AnswerService answerService;
@@ -30,7 +33,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
         validateNotAnswerOwner(member, answer);
         validateNotExistVoteAnswer(member, answer);
 
-        return saveVoteAnswer(member, answer, +1);
+        return save(member, answer, GOOD);
     }
 
     @Override
@@ -41,7 +44,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
         validateNotAnswerOwner(member, answer);
         validateNotExistVoteAnswer(member, answer);
 
-        return saveVoteAnswer(member, answer, -1);
+        return save(member, answer, BAD);
     }
 
     private void validateNotAnswerOwner(Member member, Answer answer) {
@@ -56,16 +59,16 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
     }
 
     private void throwException(VoteAnswer voteAnswer) {
-        if (voteAnswer.getVote() == 1) {
+        if (voteAnswer.getVote() == GOOD) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_GOOD);
         }
-        if (voteAnswer.getVote() == -1) {
+        if (voteAnswer.getVote() == BAD) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_BAD);
         }
         throw new BusinessLogicException(ExceptionCode.STRANGE_DATA);
     }
 
-    private VoteAnswer saveVoteAnswer(Member member, Answer answer, int vote){
+    private VoteAnswer save(Member member, Answer answer, int vote){
         VoteAnswer voteAnswer = VoteAnswer.builder()
                 .member(member)
                 .answer(answer)
