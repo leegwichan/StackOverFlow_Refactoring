@@ -21,7 +21,7 @@ public enum ExceptionCode {
     SAME_QUESTION_ANSWER_MEMBER(400, "자신의 질문에 답변을 달 수 없습니다."),
     SAME_WRITER_VOTER(400, "자신의 글에는 투표할 수 없습니다."),
     NOT_IMAGE_EXTENSION(400, "이미지 파일이 아닙니다."),
-    STRANGE_DATA(500, Constants.SERVER_ERROR_MESSAGE),
+    STRANGE_VOTE_DATA(500, Constants.SERVER_ERROR_MESSAGE),
 
     VOTE_VALUE_INCORRECT(500, Constants.SERVER_ERROR_MESSAGE),
     ;

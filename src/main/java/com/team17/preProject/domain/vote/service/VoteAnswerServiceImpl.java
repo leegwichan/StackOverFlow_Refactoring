@@ -65,7 +65,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
         if (voteAnswer.getVote() == BAD) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_BAD);
         }
-        throw new BusinessLogicException(ExceptionCode.STRANGE_DATA);
+        throw new BusinessLogicException(ExceptionCode.STRANGE_VOTE_DATA);
     }
 
     private VoteAnswer save(Member member, Answer answer, int vote){
