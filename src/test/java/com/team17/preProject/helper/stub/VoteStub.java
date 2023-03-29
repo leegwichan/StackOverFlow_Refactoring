@@ -7,11 +7,11 @@ public class VoteStub {
 
     public static final VoteAnswer VOTE_ANSWER_ENTITY;
     static {
-        VOTE_ANSWER_ENTITY = new VoteAnswer();
-        VOTE_ANSWER_ENTITY.setVaId(8L);
-        VOTE_ANSWER_ENTITY.setMember(MemberStub.ENTITY);
-        VOTE_ANSWER_ENTITY.setAnswer(AnswerStub.ENTITY);
-        VOTE_ANSWER_ENTITY.setVote(1);
+        VOTE_ANSWER_ENTITY = VoteAnswer.builder()
+                .vaId(8L)
+                .member(MemberStub.ENTITY)
+                .answer(AnswerStub.ENTITY)
+                .vote(1).build();
     }
 
     public static final VoteQuestion VOTE_QUESTION_ENTITY;

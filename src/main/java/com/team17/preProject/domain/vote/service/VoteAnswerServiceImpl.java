@@ -66,12 +66,12 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
     }
 
     private VoteAnswer saveVoteAnswer(Member member, Answer answer, int vote){
-        VoteAnswer voteAnswer = new VoteAnswer();
-        voteAnswer.setMember(member);
-        voteAnswer.setAnswer(answer);
-        voteAnswer.setVote(vote);
+        VoteAnswer voteAnswer = VoteAnswer.builder()
+                .member(member)
+                .answer(answer)
+                .vote(vote).build();
 
-        answer.addVote(vote);
+        answer.addVote(voteAnswer.getVote());
         answerService.updateAnswer(answer);
 
         return repository.save(voteAnswer);

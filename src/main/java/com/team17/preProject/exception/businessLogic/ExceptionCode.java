@@ -21,8 +21,14 @@ public enum ExceptionCode {
     SAME_QUESTION_ANSWER_MEMBER(400, "자신의 질문에 답변을 달 수 없습니다."),
     SAME_WRITER_VOTER(400, "자신의 글에는 투표할 수 없습니다."),
     NOT_IMAGE_EXTENSION(400, "이미지 파일이 아닙니다."),
-    STRANGE_DATA(500, "서버 오류입니다 관리자에게 문의하세요."),
+    STRANGE_DATA(500, Constants.SERVER_ERROR_MESSAGE),
+
+    VOTE_VALUE_INCORRECT(500, Constants.SERVER_ERROR_MESSAGE),
     ;
+
+    private static class Constants {
+        private static final String SERVER_ERROR_MESSAGE = "서버 오류입니다 관리자에게 문의하세요.";
+    }
 
     @Getter
     private int status;
