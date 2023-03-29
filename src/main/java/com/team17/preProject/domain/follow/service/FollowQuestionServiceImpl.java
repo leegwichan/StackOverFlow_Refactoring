@@ -55,18 +55,12 @@ public class FollowQuestionServiceImpl implements FollowQuestionService {
     }
 
     private void validateNotExistFollowQuestion(Member member, Question question){
-        Optional<FollowQuestion> optional = repository.findByMemberAndQuestion(member, question);
-        if(optional.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);
-        }
+        repository.findByMemberAndQuestion(member, question)
+                .ifPresent(fq -> {throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);});
     }
 
     private FollowQuestion validateExistFollowQuestion(Member member, Question question){
-        Optional<FollowQuestion> optional = repository.findByMemberAndQuestion(member, question);
-        if(optional.isEmpty()){
-            throw new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST);
-        }
-
-        return optional.get();
+        return repository.findByMemberAndQuestion(member, question)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST));
     }
 }

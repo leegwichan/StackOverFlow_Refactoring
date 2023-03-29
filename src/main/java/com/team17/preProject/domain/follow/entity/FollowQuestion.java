@@ -2,11 +2,9 @@ package com.team17.preProject.domain.follow.entity;
 
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.question.entity.Question;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

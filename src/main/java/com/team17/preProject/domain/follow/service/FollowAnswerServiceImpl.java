@@ -57,18 +57,12 @@ public class FollowAnswerServiceImpl implements FollowAnswerService {
     }
 
     private void validateNotExistFollowAnswer(Member member, Answer answer){
-        Optional<FollowAnswer> optional = repository.findByMemberAndAnswer(member, answer);
-        if (optional.isPresent()){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);
-        };
+        repository.findByMemberAndAnswer(member, answer)
+                .ifPresent(fa -> {throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);});
     }
 
     private FollowAnswer validateExistFollowAnswer(Member member, Answer answer){
-        Optional<FollowAnswer> optional = repository.findByMemberAndAnswer(member, answer);
-        if (optional.isEmpty()){
-            throw new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST);
-        }
-
-        return optional.get();
+        return repository.findByMemberAndAnswer(member, answer)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST));
     }
 }

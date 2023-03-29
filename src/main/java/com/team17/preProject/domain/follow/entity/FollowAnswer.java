@@ -2,7 +2,6 @@ package com.team17.preProject.domain.follow.entity;
 
 import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.member.entity.Member;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
