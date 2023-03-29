@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 public class VoteAnswerServiceImpl implements VoteAnswerService{
 
     private final VoteAnswerRepository repository;
-    private final AnswerRepository answerRepository;
     private final MemberService memberService;
     private final AnswerService answerService;
 
@@ -76,7 +75,7 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
         voteAnswer.setVote(vote);
 
         answer.addVote(vote);
-        answerRepository.save(answer);
+        answerService.updateAnswer(answer);
 
         return repository.save(voteAnswer);
     }
