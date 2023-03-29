@@ -75,8 +75,8 @@ public class Question extends Auditable {
         this.bestAnswer = answer;
     }
 
-    public void setVote(long vote) {
-        this.vote = vote;
+    public void addVote(int vote) {
+        this.vote += vote;
     }
 
     public void update(Question question) {

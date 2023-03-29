@@ -16,10 +16,11 @@ public class VoteStub {
 
     public static final VoteQuestion VOTE_QUESTION_ENTITY;
     static {
-        VOTE_QUESTION_ENTITY = new VoteQuestion();
-        VOTE_QUESTION_ENTITY.setVqId(10L);
-        VOTE_QUESTION_ENTITY.setMember(MemberStub.ENTITY);
-        VOTE_QUESTION_ENTITY.setQuestion(QuestionStub.ENTITY);
-        VOTE_QUESTION_ENTITY.setVote(-1);
+        VOTE_QUESTION_ENTITY = VoteQuestion.builder()
+                .vqId(10L)
+                .member(MemberStub.ENTITY)
+                .question(QuestionStub.ENTITY)
+                .vote(-1)
+                .build();
     }
 }

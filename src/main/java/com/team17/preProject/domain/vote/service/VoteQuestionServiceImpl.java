@@ -33,7 +33,7 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
         validateNotQuestionOwner(member, question);
         validateNotExistVoteQuestion(member, question);
 
-        return saveVoteQuestion(member, question, GOOD);
+        return save(member, question, GOOD);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
         validateNotQuestionOwner(member, question);
         validateNotExistVoteQuestion(member, question);
 
-        return saveVoteQuestion(member, question, BAD);
+        return save(member, question, BAD);
     }
 
     private void validateNotQuestionOwner(Member member, Question question) {
@@ -68,16 +68,15 @@ public class VoteQuestionServiceImpl implements VoteQuestionService{
         throw new BusinessLogicException(ExceptionCode.STRANGE_VOTE_DATA);
     }
 
-    private VoteQuestion saveVoteQuestion(Member member, Question question, int vote){
-        VoteQuestion voteQuestion = new VoteQuestion();
-        voteQuestion.setMember(member);
-        voteQuestion.setQuestion(question);
-        voteQuestion.setVote(vote);
+    private VoteQuestion save(Member member, Question question, int vote){
+        VoteQuestion voteQuestion = VoteQuestion.builder()
+                .member(member)
+                .question(question)
+                .vote(vote)
+                .build();
 
-        // 추후 setter 변경 필요
-        question.setVote(question.getVote() + vote);
+        question.addVote(voteQuestion.getVote());
         questionService.updateQuestion(question);
-
         return repository.save(voteQuestion);
     }
 
