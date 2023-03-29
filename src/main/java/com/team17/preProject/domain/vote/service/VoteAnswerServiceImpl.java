@@ -1,7 +1,6 @@
 package com.team17.preProject.domain.vote.service;
 
 import com.team17.preProject.domain.answer.entity.Answer;
-import com.team17.preProject.domain.answer.repository.AnswerRepository;
 import com.team17.preProject.domain.answer.service.AnswerService;
 import com.team17.preProject.domain.vote.entity.VoteAnswer;
 import com.team17.preProject.domain.vote.repository.VoteAnswerRepository;
@@ -23,49 +22,47 @@ public class VoteAnswerServiceImpl implements VoteAnswerService{
     private final MemberService memberService;
     private final AnswerService answerService;
 
-
-
-
     @Override
     public VoteAnswer voteGood(long memberId, long answerId) {
         Member member = memberService.findMember(memberId);
         Answer answer = answerService.findAnswer(answerId);
-        VoteAnswer voteAnswer = repository.findByMemberAndAnswer(member, answer);
 
-        if (member.getMemberId() == answer.getMember().getMemberId()){
-            throw new BusinessLogicException(ExceptionCode.SAME_WRITER_VOTER);
-        }
+        validateNotAnswerOwner(member, answer);
+        validateNotExistVoteAnswer(member, answer);
 
-        if (voteAnswer == null){
-            return saveVoteAnswer(member, answer, 1);
-        } else if (voteAnswer.getVote() == 1){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_GOOD);
-        } else if (voteAnswer.getVote() == -1){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_BAD);
-        }
-
-        return null;
+        return saveVoteAnswer(member, answer, +1);
     }
 
     @Override
     public VoteAnswer voteBad(long memberId, long answerId) {
         Member member = memberService.findMember(memberId);
         Answer answer = answerService.findAnswer(answerId);
-        VoteAnswer voteAnswer = repository.findByMemberAndAnswer(member, answer);
 
+        validateNotAnswerOwner(member, answer);
+        validateNotExistVoteAnswer(member, answer);
+
+        return saveVoteAnswer(member, answer, -1);
+    }
+
+    private void validateNotAnswerOwner(Member member, Answer answer) {
         if (member.getMemberId() == answer.getMember().getMemberId()){
             throw new BusinessLogicException(ExceptionCode.SAME_WRITER_VOTER);
         }
+    }
 
-        if (voteAnswer == null){
-            return saveVoteAnswer(member, answer, -1);
-        } else if (voteAnswer.getVote() == 1){
+    private void validateNotExistVoteAnswer(Member member, Answer answer) {
+        repository.findByMemberAndAnswer(member, answer)
+                .ifPresent(voteAnswer -> throwException(voteAnswer));
+    }
+
+    private void throwException(VoteAnswer voteAnswer) {
+        if (voteAnswer.getVote() == 1) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_GOOD);
-        } else if (voteAnswer.getVote() == -1){
+        }
+        if (voteAnswer.getVote() == -1) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_VOTE_BAD);
         }
-
-        return null;
+        throw new BusinessLogicException(ExceptionCode.STRANGE_DATA);
     }
 
     private VoteAnswer saveVoteAnswer(Member member, Answer answer, int vote){
