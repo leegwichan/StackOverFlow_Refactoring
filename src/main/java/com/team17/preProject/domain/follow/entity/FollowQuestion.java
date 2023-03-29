@@ -14,10 +14,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Getter
-@Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class FollowQuestion {
@@ -37,4 +34,11 @@ public class FollowQuestion {
     @CreatedDate
     @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
+
+    @Builder
+    public FollowQuestion(long fqId, Question question, Member member) {
+        this.fqId = fqId;
+        this.question = question;
+        this.member = member;
+    }
 }

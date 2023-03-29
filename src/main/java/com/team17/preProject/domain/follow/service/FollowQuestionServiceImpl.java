@@ -20,7 +20,7 @@ import java.util.Optional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class FollowQuestionServiceImpl implements FollowQuestionService{
+public class FollowQuestionServiceImpl implements FollowQuestionService {
 
     private final FollowQuestionRepository repository;
     private final MemberService memberService;
@@ -37,13 +37,11 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
     public FollowQuestion createFollowQuestion(long memberId, long questionId) {
         Member findMember = memberService.findMember(memberId);
         Question findQuestion = questionService.findQuestion(questionId);
+        validateNotExistFollowQuestion(findMember, findQuestion);
 
-        findFollowQuestionExpectNull(findMember, findQuestion);
-
-        FollowQuestion followQuestion = new FollowQuestion();
-        followQuestion.setMember(findMember);
-        followQuestion.setQuestion(findQuestion);
-
+        FollowQuestion followQuestion = FollowQuestion.builder()
+                .member(findMember)
+                .question(findQuestion).build();
         return repository.save(followQuestion);
     }
 
@@ -52,18 +50,18 @@ public class FollowQuestionServiceImpl implements FollowQuestionService{
         Member findMember = memberService.findMember(memberId);
         Question findQuestion = questionService.findQuestion(questionId);
 
-        FollowQuestion followQuestion = findFollowQuestionExpectPresent(findMember, findQuestion);
+        FollowQuestion followQuestion = validateExistFollowQuestion(findMember, findQuestion);
         repository.delete(followQuestion);
     }
 
-    private void findFollowQuestionExpectNull(Member member, Question question){
+    private void validateNotExistFollowQuestion(Member member, Question question){
         Optional<FollowQuestion> optional = repository.findByMemberAndQuestion(member, question);
         if(optional.isPresent()){
             throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);
         }
     }
 
-    private FollowQuestion findFollowQuestionExpectPresent(Member member, Question question){
+    private FollowQuestion validateExistFollowQuestion(Member member, Question question){
         Optional<FollowQuestion> optional = repository.findByMemberAndQuestion(member, question);
         if(optional.isEmpty()){
             throw new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST);

@@ -20,7 +20,7 @@ import java.util.Optional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class FollowAnswerServiceImpl implements FollowAnswerService{
+public class FollowAnswerServiceImpl implements FollowAnswerService {
 
     private final FollowAnswerRepository repository;
     private final MemberService memberService;
@@ -39,7 +39,7 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
         Member findMember = memberService.findMember(memberId);
         Answer findAnswer = answerService.findAnswer(answerId);
 
-        findFollowAnswerExpectNull(findMember, findAnswer);
+        validateNotExistFollowAnswer(findMember, findAnswer);
 
         FollowAnswer followAnswer = new FollowAnswer();
         followAnswer.setMember(findMember);
@@ -52,18 +52,18 @@ public class FollowAnswerServiceImpl implements FollowAnswerService{
     public void deleteFollowAnswer(long memberId, long answerId) {
         Member findMember = memberService.findMember(memberId);
         Answer findAnswer = answerService.findAnswer(answerId);
-        FollowAnswer followAnswer = findFollowExceptionExceptPresent(findMember, findAnswer);
+        FollowAnswer followAnswer = validateExistFollowAnswer(findMember, findAnswer);
         repository.delete(followAnswer);
     }
 
-    private void findFollowAnswerExpectNull(Member member, Answer answer){
+    private void validateNotExistFollowAnswer(Member member, Answer answer){
         Optional<FollowAnswer> optional = repository.findByMemberAndAnswer(member, answer);
         if (optional.isPresent()){
             throw new BusinessLogicException(ExceptionCode.ALREADY_FOLLOW_POST);
         };
     }
 
-    private FollowAnswer findFollowExceptionExceptPresent(Member member, Answer answer){
+    private FollowAnswer validateExistFollowAnswer(Member member, Answer answer){
         Optional<FollowAnswer> optional = repository.findByMemberAndAnswer(member, answer);
         if (optional.isEmpty()){
             throw new BusinessLogicException(ExceptionCode.NOT_FOLLOW_POST);
