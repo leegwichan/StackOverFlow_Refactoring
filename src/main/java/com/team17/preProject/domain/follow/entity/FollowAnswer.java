@@ -3,6 +3,7 @@ package com.team17.preProject.domain.follow.entity;
 import com.team17.preProject.domain.answer.entity.Answer;
 import com.team17.preProject.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -34,4 +34,11 @@ public class FollowAnswer {
     @CreatedDate
     @Column(name = "CREATED_AT", updatable = false)
     private LocalDateTime createdAt;
+
+    @Builder
+    private FollowAnswer(long faId, Answer answer, Member member) {
+        this.faId = faId;
+        this.answer = answer;
+        this.member = member;
+    }
 }

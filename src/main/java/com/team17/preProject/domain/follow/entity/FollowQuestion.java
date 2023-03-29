@@ -3,6 +3,7 @@ package com.team17.preProject.domain.follow.entity;
 import com.team17.preProject.domain.member.entity.Member;
 import com.team17.preProject.domain.question.entity.Question;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,11 +15,13 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class FollowQuestion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long fqId;
