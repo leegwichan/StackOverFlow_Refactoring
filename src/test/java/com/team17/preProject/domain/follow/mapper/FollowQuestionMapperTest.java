@@ -23,12 +23,15 @@ public class FollowQuestionMapperTest {
     @Autowired
     private FollowQuestionMapper mapper;
 
-    private static final FollowQuestion MOCK_ENTITY = new FollowQuestion();
+    private static final FollowQuestion MOCK_ENTITY;
     private static final Question MOCK_QUESTION = QuestionStub.getChangeableEntity();
     static {
-        MOCK_ENTITY.setMember(MemberStub.getChangeableEntity());
+        MOCK_ENTITY = FollowQuestion.builder()
+                .member(MemberStub.getChangeableEntity())
+                .question(MOCK_QUESTION)
+                .build();
+
         MOCK_QUESTION.setMember(MemberStub.getChangeableEntity());
-        MOCK_ENTITY.setQuestion(MOCK_QUESTION);
     }
 
     @Test
